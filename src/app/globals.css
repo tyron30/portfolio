@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
+  :root {
+    --background: 32 38% 95%;
+    --foreground: 20 20% 10%;
+    --card: 30 30% 98%;
+    --card-foreground: 20 20% 10%;
+    --primary: 24 95% 53%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 30 20% 91%;
+    --secondary-foreground: 20 20% 10%;
+    --muted: 30 18% 90%;
+    --muted-foreground: 20 10% 40%;
+    --accent: 24 90% 94%;
+    --accent-foreground: 24 80% 35%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 30 15% 85%;
+    --input: 30 15% 85%;
+    --ring: 24 95% 53%;
+    --radius: 0.85rem;
+  }
+
+  .dark {
+    --background: 32 38% 95%;
+    --foreground: 20 20% 10%;
+    --card: 30 30% 98%;
+    --card-foreground: 20 20% 10%;
+    --primary: 24 95% 53%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 30 20% 91%;
+    --secondary-foreground: 20 20% 10%;
+    --muted: 30 18% 90%;
+    --muted-foreground: 20 10% 40%;
+    --accent: 24 90% 94%;
+    --accent-foreground: 24 80% 35%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 30 15% 85%;
+    --input: 30 15% 85%;
+    --ring: 24 95% 53%;
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  h1, h2, h3 {
+    @apply font-display tracking-tight;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/60 backdrop-blur-xl border border-black/5;
+  }
+  /* For deliberately dark, color-blocked sections (like the About "Hello,
+     I'm..." block) that stay dark even though the site theme is light. */
+  .glass-dark {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10;
+  }
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-amber-500 bg-clip-text text-transparent;
+  }
+}
