@@ -59,7 +59,7 @@ export async function POST(req: Request) {
       Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
     },
     body: JSON.stringify({
-      model: "llama-3.3-70b-versatile",
+      model: "openai/gpt-oss-20b",
       stream: true,
       temperature: 0.4,
       messages: [
@@ -70,7 +70,11 @@ export async function POST(req: Request) {
   });
 
   if (!groqRes.ok || !groqRes.body) {
-    return new Response("The chatbot is temporarily unavailable. Please try again shortly.", { status: 502 });
+    console.error("Groq API error:", groqRes.status);
+    return new Response(
+      "The chatbot is temporarily unavailable. Please try again shortly.",
+      { status: 502 }
+    );
   }
 
   // Translate the SSE stream into a plain text stream of content deltas,
@@ -118,3 +122,6 @@ export async function POST(req: Request) {
     headers: { "Content-Type": "text/plain; charset=utf-8" },
   });
 }
+
+
+
