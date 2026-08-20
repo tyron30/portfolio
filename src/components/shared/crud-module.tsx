@@ -191,27 +191,27 @@ export function CrudModule<T extends BaseRow>({
 
           <form onSubmit={onSubmit} className="space-y-4">
             {fields.map((field) => {
-              const error = form.formState.errors[field.name as keyof T]?.message as string | undefined;
-              const value = form.watch(field.name as keyof T);
+              const error = form.formState.errors[field.name as any]?.message as string | undefined;
+              const value = form.watch(field.name as any);
 
               return (
                 <FormField key={field.name} label={field.label} htmlFor={field.name} error={error} required={field.required} hint={field.hint}>
                   {field.type === "textarea" && (
-                    <Textarea id={field.name} {...form.register(field.name as keyof T)} error={!!error} />
+                    <Textarea id={field.name} {...form.register(field.name as any)} error={!!error} />
                   )}
                   {field.type === "text" && (
-                    <Input id={field.name} {...form.register(field.name as keyof T)} error={!!error} />
+                    <Input id={field.name} {...form.register(field.name as any)} error={!!error} />
                   )}
                   {field.type === "number" && (
                     <Input
                       id={field.name}
                       type="number"
-                      {...form.register(field.name as keyof T, { valueAsNumber: true })}
+                      {...form.register(field.name as any, { valueAsNumber: true })}
                       error={!!error}
                     />
                   )}
                   {field.type === "date" && (
-                    <Input id={field.name} type="date" {...form.register(field.name as keyof T)} error={!!error} />
+                    <Input id={field.name} type="date" {...form.register(field.name as any)} error={!!error} />
                   )}
                   {field.type === "boolean" && (
                     <input
@@ -219,14 +219,14 @@ export function CrudModule<T extends BaseRow>({
                       type="checkbox"
                       className="h-5 w-5 rounded border-input"
                       checked={!!value}
-                      onChange={(e) => form.setValue(field.name as keyof T, e.target.checked as never, { shouldDirty: true })}
+                      onChange={(e) => form.setValue(field.name as any, e.target.checked as never, { shouldDirty: true })}
                     />
                   )}
                   {field.type === "select" && (
                     <select
                       id={field.name}
                       className="flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                      {...form.register(field.name as keyof T)}
+                      {...form.register(field.name as any)}
                     >
                       {field.options?.map((opt) => (
                         <option key={opt.value} value={opt.value}>
@@ -242,7 +242,7 @@ export function CrudModule<T extends BaseRow>({
                       defaultValue={Array.isArray(value) ? value.join(", ") : ""}
                       onBlur={(e) =>
                         form.setValue(
-                          field.name as keyof T,
+                          field.name as any,
                           e.target.value.split(",").map((s) => s.trim()).filter(Boolean) as never,
                           { shouldDirty: true }
                         )
@@ -254,7 +254,7 @@ export function CrudModule<T extends BaseRow>({
                       bucket={field.bucket ?? "misc"}
                       accept={field.type === "file" ? "application/pdf" : "image/*"}
                       value={value as string | null}
-                      onChange={(url) => form.setValue(field.name as keyof T, url as never, { shouldDirty: true })}
+                      onChange={(url) => form.setValue(field.name as any, url as never, { shouldDirty: true })}
                     />
                   )}
                 </FormField>

@@ -22,7 +22,7 @@ interface AboutSectionProps {
 export function AboutSection({ about, certificatesCount = 0 }: AboutSectionProps) {
   if (!about) return null;
 
-  const firstName = about.full_name.split(" ")[0];
+  const firstName = about.full_name.split(" ")[0] ?? about.full_name;
 
   const stats = [
     { value: about.years_experience ?? 0, label: "Years Experience" },

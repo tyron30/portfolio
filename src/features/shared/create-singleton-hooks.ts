@@ -28,11 +28,11 @@ export function createSingletonHooks<T extends { id?: string }>(table: string, q
       mutationFn: async ({ id, values }: { id?: string; values: Partial<T> }) => {
         const supabase = createClient();
         if (id) {
-          const { data, error } = await supabase.from(table).update(values).eq("id", id).select().single();
+          const { data, error } = await supabase.from(table).update(values as any).eq("id", id).select().single();
           if (error) throw error;
           return data as T;
         }
-        const { data, error } = await supabase.from(table).insert(values).select().single();
+        const { data, error } = await supabase.from(table).insert(values as any).select().single();
         if (error) throw error;
         return data as T;
       },

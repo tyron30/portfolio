@@ -51,7 +51,7 @@ export function createCrudHooks<T extends { id: string }>({
     return useMutation({
       mutationFn: async (values: Partial<T>) => {
         const supabase = createClient();
-        const { data, error } = await supabase.from(table).insert(values).select().single();
+        const { data, error } = await supabase.from(table).insert(values as any).select().single();
         if (error) throw error;
         return data as T;
       },
@@ -68,7 +68,7 @@ export function createCrudHooks<T extends { id: string }>({
     return useMutation({
       mutationFn: async ({ id, values }: { id: string; values: Partial<T> }) => {
         const supabase = createClient();
-        const { data, error } = await supabase.from(table).update(values).eq("id", id).select().single();
+        const { data, error } = await supabase.from(table).update(values as any).eq("id", id).select().single();
         if (error) throw error;
         return data as T;
       },

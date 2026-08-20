@@ -1,5 +1,4 @@
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
-import type { Database } from "@/types/supabase";
 
 /**
  * Plain (cookie-free) Supabase client for PUBLIC READS ONLY.
@@ -16,9 +15,13 @@ import type { Database } from "@/types/supabase";
  *
  * Never use this client for anything that needs the logged-in admin session
  * (writes, admin data) — use `lib/supabase/server.ts` for that.
+ *
+ * Deliberately untyped (no <Database> generic) — see src/types/supabase.ts
+ * for why. Run `npx supabase gen types` and re-add `<Database>` here once
+ * you have real generated types, for actual query type-safety.
  */
 export function createPublicClient() {
-  return createSupabaseClient<Database>(
+  return createSupabaseClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     { auth: { persistSession: false } }
