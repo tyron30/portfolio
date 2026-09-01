@@ -20,6 +20,7 @@ const CATEGORY_LABEL: Record<string, string> = {
   tools: "Tools",
   languages: "Languages",
   frameworks: "Frameworks",
+  library: "Library",
 };
 
 /** A single logo that spins continuously on its Y axis — like a slowly turning coin. */

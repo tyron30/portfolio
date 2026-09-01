@@ -18,6 +18,7 @@ const fields: CrudField[] = [
       { label: "Tools", value: "tools" },
       { label: "Languages", value: "languages" },
       { label: "Frameworks", value: "frameworks" },
+      { label: "Library", value: "library" },
     ],
   },
   { name: "icon_url", label: "Icon", type: "image", bucket: "misc" },

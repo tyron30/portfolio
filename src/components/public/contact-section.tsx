@@ -15,15 +15,22 @@ interface ContactSectionProps {
     email?: string | null;
     phone?: string | null;
     address?: string | null;
-    map_lat?: number | null;
-    map_lng?: number | null;
+    map_embed_code?: string | null;
   } | null;
 }
 
 const initialState: ContactFormState = {};
 
+/** Pulls the src="..." URL out of a pasted Google Maps <iframe> embed code, so we can render our own iframe with our own sizing instead of trusting arbitrary pasted HTML/attributes. */
+function extractMapSrc(embedCode?: string | null): string | null {
+  if (!embedCode) return null;
+  const match = embedCode.match(/src=["']([^"']+)["']/i);
+  return match ? (match[1] ?? null) : null;
+}
+
 export function ContactSection({ contactInfo }: ContactSectionProps) {
   const [state, formAction, isPending] = useActionState(submitContactMessage, initialState);
+  const mapSrc = extractMapSrc(contactInfo?.map_embed_code);
 
   return (
     <section id="contact" className="container py-24">
@@ -60,15 +67,16 @@ export function ContactSection({ contactInfo }: ContactSectionProps) {
             </div>
           )}
 
-          {contactInfo?.map_lat && contactInfo?.map_lng && (
+          {mapSrc && (
             <div className="overflow-hidden rounded-xl border border-border">
               <iframe
                 title="Location map"
+                src={mapSrc}
                 width="100%"
-                height="200"
+                height="220"
                 loading="lazy"
                 className="border-0"
-                src={`https://www.google.com/maps?q=${contactInfo.map_lat},${contactInfo.map_lng}&z=14&output=embed`}
+                referrerPolicy="strict-origin-when-cross-origin"
               />
             </div>
           )}

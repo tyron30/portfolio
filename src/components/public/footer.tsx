@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { ArrowUp, Github, Linkedin, Facebook, Instagram, Youtube, Globe } from "lucide-react";
 
 interface FooterProps {
@@ -27,7 +28,7 @@ export function Footer({ fullName, socialLinks }: FooterProps) {
   return (
     <footer className="border-t border-border py-10">
       <div className="container flex flex-col items-center gap-6 text-center">
-        <p className="font-display text-lg font-bold text-gradient">{fullName}</p>
+        <p className="text-lg font-semibold text-gradient">{fullName}</p>
 
         <nav className="flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
           {QUICK_LINKS.map((link) => (
@@ -65,8 +66,16 @@ export function Footer({ fullName, socialLinks }: FooterProps) {
           </div>
         )}
 
+        {/*
+          Deliberately inconspicuous admin entry point: same size/color as
+          the surrounding copyright text, no underline, no visual cue that
+          it's a link. Findable only if you already know it's there.
+        */}
         <p className="text-xs text-muted-foreground">
-          © {new Date().getFullYear()} {fullName}. All rights reserved.
+          © {new Date().getFullYear()} {fullName}. All rights reserved.{" "}
+          <Link href="/admin/login" className="text-muted-foreground no-underline" aria-hidden="true" tabIndex={-1}>
+            ·
+          </Link>
         </p>
 
         <button

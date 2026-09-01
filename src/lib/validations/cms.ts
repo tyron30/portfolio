@@ -83,7 +83,7 @@ export type GalleryItem = z.infer<typeof galleryItemSchema> & { id: string };
 export const techStackSchema = z.object({
   name: z.string().min(1, "Name is required"),
   icon_url: z.string().url().nullable().optional(),
-  category: z.enum(["frontend", "backend", "database", "tools", "languages", "frameworks"]),
+  category: z.enum(["frontend", "backend", "database", "tools", "languages", "frameworks", "library"]),
   proficiency: z.coerce.number().int().min(1).max(100).default(80),
   sort_order: z.coerce.number().int().default(0),
 });
@@ -117,6 +117,7 @@ export type About = z.infer<typeof aboutSchema> & { id: string };
 
 // ---- Contact Info (singleton) ----
 export const contactInfoSchema = z.object({
+  map_embed_code: z.string().optional(),
   email: z.string().email().optional().or(z.literal("")),
   phone: z.string().optional(),
   address: z.string().optional(),
