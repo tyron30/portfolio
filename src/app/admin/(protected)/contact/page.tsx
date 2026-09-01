@@ -1,3 +1,5 @@
+"use client";
+
 import { SingletonForm } from "@/components/shared/singleton-form";
 import { contactInfoSchema, type ContactInfo } from "@/lib/validations/cms";
 import type { CrudField } from "@/features/shared/crud-field";
@@ -26,3 +28,4 @@ export default function ContactInfoPage() {
     />
   );
 }
+
