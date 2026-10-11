@@ -33,6 +33,12 @@ const fields: CrudField[] = [
     hint: "A different photo for the \"Hello, I'm...\" section — separate from the Hero image above.",
   },
   { name: "bio", label: "Biography", type: "textarea" },
+  {
+    name: "key_skills",
+    label: "Key Skills",
+    type: "tags",
+    hint: "Broader competencies NOT already listed in Tech Stack — e.g. Network Administration, IT Security Awareness, Customer Service. Don't repeat named tools/technologies here (those belong in Tech Stack).",
+  },
   { name: "location", label: "Location", type: "text" },
   { name: "email", label: "Email", type: "text" },
   { name: "phone", label: "Phone", type: "text" },

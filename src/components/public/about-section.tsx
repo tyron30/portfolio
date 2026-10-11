@@ -13,6 +13,7 @@ interface AboutSectionProps {
     phone?: string | null;
     profile_image_url?: string | null;
     about_image_url?: string | null;
+    key_skills?: string[] | null;
     years_experience?: number | null;
     projects_completed?: number | null;
   } | null;
@@ -31,9 +32,6 @@ export function AboutSection({ about, certificatesCount = 0 }: AboutSectionProps
   ];
 
   return (
-    // Deliberately dark, regardless of the site's light theme — a
-    // color-blocked contrast section, matching the reference's black
-    // "Hello, I'm..." stats block against its cream hero.
     <section id="about" className="bg-neutral-950 py-24 text-neutral-50">
       <div className="container grid items-center gap-16 lg:grid-cols-[1fr_0.8fr]">
         <Reveal>
@@ -62,7 +60,22 @@ export function AboutSection({ about, certificatesCount = 0 }: AboutSectionProps
             )}
           </div>
 
-          <StaggerContainer className="mt-10 space-y-4">
+          {!!about.key_skills?.length && (
+            <div className="mt-6">
+              <p className="mb-2.5 text-xs font-semibold uppercase tracking-widest text-neutral-500">Key Skills</p>
+              <StaggerContainer className="flex flex-wrap gap-2">
+                {about.key_skills.map((skill) => (
+                  <StaggerItem key={skill}>
+                    <span className="inline-block rounded-lg border border-primary/30 bg-primary/10 px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-primary">
+                      {skill}
+                    </span>
+                  </StaggerItem>
+                ))}
+              </StaggerContainer>
+            </div>
+          )}
+
+          <StaggerContainer className="mt-8 space-y-4">
             {stats.map((stat) => (
               <StaggerItem key={stat.label}>
                 <div className="flex items-center gap-3">
@@ -76,12 +89,10 @@ export function AboutSection({ about, certificatesCount = 0 }: AboutSectionProps
         </Reveal>
 
         <Reveal delay={0.15} className="relative mx-auto aspect-[4/5] w-full max-w-sm">
-          {/* Decorative checkerboard dot pattern, echoing the reference's subtle background texture behind the photo */}
           <div
             className="absolute -right-8 -top-8 -z-10 h-40 w-40 opacity-40 sm:h-48 sm:w-48"
             style={{
-              backgroundImage:
-                "radial-gradient(hsl(var(--primary) / 0.5) 1.5px, transparent 1.5px)",
+              backgroundImage: "radial-gradient(hsl(var(--primary) / 0.5) 1.5px, transparent 1.5px)",
               backgroundSize: "14px 14px",
             }}
           />

@@ -52,7 +52,7 @@ export function Hero({ about, resumeUrl, socialLinks }: HeroProps) {
   const [line1, line2] = formatRoleStatement(role);
 
   return (
-    <section id="hero" className="relative overflow-x-clip pb-10 pt-24 sm:pt-28">
+    <section id="hero" className="relative overflow-x-clip pb-10 pt-28 sm:pt-32">
       <div className="pointer-events-none absolute inset-0 -z-10 bg-background">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,hsl(var(--foreground))_1px,transparent_0)] bg-[length:32px_32px] opacity-[0.05]" />
       </div>
@@ -64,7 +64,7 @@ export function Hero({ about, resumeUrl, socialLinks }: HeroProps) {
         className="relative mx-auto flex w-full max-w-4xl flex-col items-center px-4 text-center"
       >
         <div className="relative w-full text-center">
-          <h1 className="relative z-0 select-none font-display text-5xl font-bold uppercase leading-[0.92] tracking-tight sm:text-7xl md:text-8xl lg:text-9xl">
+          <h1 className="relative z-0 select-none font-display text-5xl font-bold uppercase leading-[0.92] sm:text-7xl md:text-8xl lg:text-9xl">
             <SplitText text={line1} className="block text-foreground" />
             <SplitText text={line2} className="text-gradient text-shimmer block" />
           </h1>
@@ -76,7 +76,7 @@ export function Hero({ about, resumeUrl, socialLinks }: HeroProps) {
               text underneath — a built-in way to always read it in full. */}
           <motion.div
             variants={itemVariants}
-            className="group relative z-10 mx-auto -mt-[150px] aspect-[3/4] w-64 sm:-mt-[200px] sm:w-80 md:-mt-[260px] md:w-[26rem] lg:-mt-[300px] lg:w-[29rem]"
+            className="group relative z-10 mx-auto -mt-[70px] aspect-[3/4] w-56 sm:-mt-[140px] sm:w-80 md:-mt-[220px] md:w-[26rem] lg:-mt-[280px] lg:w-[29rem]"
           >
             <div className="relative h-full w-full">
               {about?.profile_image_url ? (
