@@ -9,44 +9,44 @@
   }
 
   :root {
-    --background: 32 38% 95%;
-    --foreground: 20 20% 10%;
-    --card: 30 30% 98%;
-    --card-foreground: 20 20% 10%;
-    --primary: 24 95% 53%;
+    --background: 210 40% 97%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --primary: 221 83% 53%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 30 20% 91%;
-    --secondary-foreground: 20 20% 10%;
-    --muted: 30 18% 90%;
-    --muted-foreground: 20 10% 40%;
-    --accent: 24 90% 94%;
-    --accent-foreground: 24 80% 35%;
+    --secondary: 214 32% 94%;
+    --secondary-foreground: 222 47% 11%;
+    --muted: 214 28% 93%;
+    --muted-foreground: 215 16% 40%;
+    --accent: 214 95% 94%;
+    --accent-foreground: 224 76% 38%;
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
-    --border: 30 15% 85%;
-    --input: 30 15% 85%;
-    --ring: 24 95% 53%;
+    --border: 214 20% 87%;
+    --input: 214 20% 87%;
+    --ring: 221 83% 53%;
     --radius: 0.85rem;
   }
 
   .dark {
-    --background: 32 38% 95%;
-    --foreground: 20 20% 10%;
-    --card: 30 30% 98%;
-    --card-foreground: 20 20% 10%;
-    --primary: 24 95% 53%;
+    --background: 210 40% 97%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --primary: 221 83% 53%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 30 20% 91%;
-    --secondary-foreground: 20 20% 10%;
-    --muted: 30 18% 90%;
-    --muted-foreground: 20 10% 40%;
-    --accent: 24 90% 94%;
-    --accent-foreground: 24 80% 35%;
+    --secondary: 214 32% 94%;
+    --secondary-foreground: 222 47% 11%;
+    --muted: 214 28% 93%;
+    --muted-foreground: 215 16% 40%;
+    --accent: 214 95% 94%;
+    --accent-foreground: 224 76% 38%;
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
-    --border: 30 15% 85%;
-    --input: 30 15% 85%;
-    --ring: 24 95% 53%;
+    --border: 214 20% 87%;
+    --input: 214 20% 87%;
+    --ring: 221 83% 53%;
   }
 
   * {
@@ -71,7 +71,7 @@
     @apply bg-white/5 backdrop-blur-xl border border-white/10;
   }
   .text-gradient {
-    @apply bg-gradient-to-r from-primary to-amber-500 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-primary to-indigo-500 bg-clip-text text-transparent;
   }
 }
 

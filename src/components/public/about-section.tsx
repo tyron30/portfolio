@@ -32,7 +32,7 @@ export function AboutSection({ about, certificatesCount = 0 }: AboutSectionProps
   ];
 
   return (
-    <section id="about" className="bg-neutral-950 py-24 text-neutral-50">
+    <section id="about" className="bg-slate-950 py-24 text-neutral-50">
       <div className="container grid items-center gap-16 lg:grid-cols-[1fr_0.8fr]">
         <Reveal>
           <p className="text-sm font-semibold uppercase tracking-widest text-primary">Hello,</p>

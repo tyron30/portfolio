@@ -70,7 +70,7 @@ export function ChatbotWidget() {
     } catch {
       setMessages((prev) => {
         const copy = [...prev];
-        copy[copy.length - 1] = { role: "assistant", content: "Connection error — please try again." };
+        copy[copy.length - 1] = { role: "assistant", content: "Connection error â€” please try again." };
         return copy;
       });
     } finally {
@@ -83,7 +83,7 @@ export function ChatbotWidget() {
       {/* Floating trigger button */}
       <button
         onClick={() => setOpen((o) => !o)}
-        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-primary to-amber-500 text-primary-foreground shadow-lg shadow-primary/25 transition-transform hover:scale-105"
+        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-primary to-indigo-500 text-primary-foreground shadow-lg shadow-primary/25 transition-transform hover:scale-105"
         aria-label="Open chat assistant"
       >
         {open ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
@@ -96,7 +96,7 @@ export function ChatbotWidget() {
           open ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
         )}
       >
-        <div className="flex items-center gap-2 border-b border-border bg-gradient-to-r from-primary to-amber-500 p-4 text-primary-foreground">
+        <div className="flex items-center gap-2 border-b border-border bg-gradient-to-r from-primary to-indigo-500 p-4 text-primary-foreground">
           <Sparkles className="h-5 w-5" />
           <div>
             <p className="text-sm font-semibold">Portfolio Assistant</p>
@@ -147,7 +147,7 @@ export function ChatbotWidget() {
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask a question…"
+            placeholder="Ask a questionâ€¦"
             disabled={isStreaming}
             className="flex-1 rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-60"
           />
