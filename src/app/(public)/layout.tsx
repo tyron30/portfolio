@@ -1,3 +1,4 @@
+﻿import { SiteEnhancements } from "@/components/motion/site-enhancements";
 import { Navbar } from "@/components/public/navbar";
 import { Footer } from "@/components/public/footer";
 import { ScrollProgress } from "@/components/public/scroll-progress";
@@ -20,6 +21,7 @@ export default async function PublicLayout({ children }: { children: React.React
       <LiveRefresh />
       <LoadingScreen />
       <ScrollProgress />
+      <SiteEnhancements name={fullName} />
       <Navbar fullName={fullName} resumeUrl={resume?.file_url} />
       <main>{children}</main>
       <Footer fullName={fullName} socialLinks={socialLinks} />
@@ -27,3 +29,4 @@ export default async function PublicLayout({ children }: { children: React.React
     </>
   );
 }
+
