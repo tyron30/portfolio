@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useInView } from "framer-motion";
 import { Camera, Globe, Monitor, Network, Server, Share2, Wifi, type LucideIcon } from "lucide-react";
 import { SectionHeader } from "@/components/public/section-header";
 
@@ -9,13 +9,13 @@ interface Node { id: string; label: string; x: number; y: number; Icon: LucideIc
 
 // Edit the text below to change what each device says.
 const NODES: Node[] = [
-  { id: "wan", label: "Internet", x: 90, y: 220, Icon: Globe, title: "Internet / WAN", desc: "ISP connections, WAN links and connectivity troubleshooting, keeping offices online." },
-  { id: "router", label: "Router", x: 270, y: 220, Icon: Network, title: "Router & Security", desc: "Router configuration, IP addressing and basic network security. TP-Link certified (OCNA, VCSA)." },
-  { id: "switch", label: "Switch", x: 450, y: 220, Icon: Share2, title: "LAN & Switching", desc: "LAN setup and maintenance: cabling, switches and keeping the local network reliable." },
-  { id: "pc", label: "Workstations", x: 720, y: 60, Icon: Monitor, title: "Workstations & Users", desc: "Windows and Linux setup, system deployment, troubleshooting and day-to-day user support." },
-  { id: "server", label: "Servers / VMs", x: 720, y: 170, Icon: Server, title: "Servers & Virtualization", desc: "Virtual machines with VMware and Hyper-V, plus remote support with AnyDesk and TeamViewer." },
-  { id: "cctv", label: "CCTV", x: 720, y: 280, Icon: Camera, title: "CCTV & Surveillance", desc: "Camera planning, installation and DVR/NVR configuration." },
-  { id: "ap", label: "Wi-Fi", x: 720, y: 380, Icon: Wifi, title: "Wireless Access", desc: "Access point setup, wireless coverage and connection troubleshooting." },
+  { id: "wan", label: "Internet", x: 135, y: 255, Icon: Globe, title: "Internet / WAN", desc: "ISP connections, WAN links and connectivity troubleshooting, keeping offices online." },
+  { id: "router", label: "Router", x: 315, y: 255, Icon: Network, title: "Router & Security", desc: "Router configuration, IP addressing and basic network security. TP-Link certified (OCNA, VCSA)." },
+  { id: "switch", label: "Switch", x: 495, y: 255, Icon: Share2, title: "LAN & Switching", desc: "LAN setup and maintenance: cabling, switches and keeping the local network reliable." },
+  { id: "pc", label: "Workstations", x: 765, y: 60, Icon: Monitor, title: "Workstations & Users", desc: "Windows and Linux setup, system deployment, troubleshooting and day-to-day user support." },
+  { id: "server", label: "Servers / VMs", x: 765, y: 190, Icon: Server, title: "Servers & Virtualization", desc: "Virtual machines with VMware and Hyper-V, plus remote support with AnyDesk and TeamViewer." },
+  { id: "cctv", label: "CCTV", x: 765, y: 320, Icon: Camera, title: "CCTV & Surveillance", desc: "Camera planning, installation and DVR/NVR configuration." },
+  { id: "ap", label: "Wi-Fi", x: 765, y: 450, Icon: Wifi, title: "Wireless Access", desc: "Access point setup, wireless coverage and connection troubleshooting." },
 ];
 
 const byId = (id: string) => NODES.find((n) => n.id === id)!;
@@ -33,13 +33,24 @@ export function NetworkDiagram() {
   const [active, setActive] = useState("router");
   const cur = byId(active);
 
+  // iOS Safari can't observe SVG elements with IntersectionObserver, so whileInView never fires there.
+  // Watch the HTML wrapper instead, with a timed fallback so the diagram always appears.
+  const wrap = useRef<HTMLDivElement>(null);
+  const seen = useInView(wrap, { once: true, amount: 0.15 });
+  const [late, setLate] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setLate(true), 1500);
+    return () => clearTimeout(t);
+  }, []);
+  const show = seen || late;
+
   return (
     <section id="network" className="container py-24">
       <SectionHeader eyebrow="How I work" title={<>The Network I <span className="text-gradient">Keep Running</span></>} subtitle="From the internet line to the last camera. Hover or tap a device." />
 
       <div className="mx-auto mt-12 max-w-5xl overflow-hidden rounded-3xl border border-border bg-card p-4 shadow-sm sm:p-8">
-        <div className="bg-dots rounded-2xl">
-          <svg viewBox="0 0 900 440" className="h-auto w-full" role="img" aria-label="Network diagram">
+        <div ref={wrap} className="bg-dots rounded-2xl">
+          <svg viewBox="0 0 900 520" className="h-auto w-full" role="img" aria-label="Network diagram">
             {EDGES.map((d, i) => (
               <motion.path
                 key={d}
@@ -47,8 +58,7 @@ export function NetworkDiagram() {
                 className="fill-none stroke-border"
                 strokeWidth={3}
                 initial={{ pathLength: 0, opacity: 0 }}
-                whileInView={{ pathLength: 1, opacity: 1 }}
-                viewport={{ once: true }}
+                animate={show ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
                 transition={{ duration: 0.9, delay: 0.2 + i * 0.12 }}
               />
             ))}
@@ -64,8 +74,7 @@ export function NetworkDiagram() {
                 <g key={n.id} transform={`translate(${n.x} ${n.y})`}>
                   <motion.g
                     initial={{ opacity: 0, scale: 0.5 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
+                    animate={show ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.5 }}
                     transition={{ delay: 0.1 + i * 0.1, type: "spring", stiffness: 260, damping: 20 }}
                     style={{ cursor: "pointer", transformBox: "fill-box", transformOrigin: "center" }}
                     onMouseEnter={() => setActive(n.id)}
@@ -83,7 +92,7 @@ export function NetworkDiagram() {
                     )}
                     <circle r={38} className={`fill-card ${on ? "stroke-primary" : "stroke-border"}`} strokeWidth={on ? 3 : 2} />
                     <n.Icon x={-17} y={-17} width={34} height={34} strokeWidth={1.8} className={on ? "text-primary" : "text-foreground/70"} />
-                    <text y={62} textAnchor="middle" className="fill-foreground" style={{ fontSize: 20, fontWeight: 600 }}>
+                    <text y={62} textAnchor="middle" className="fill-foreground" style={{ fontSize: 24, fontWeight: 600 }}>
                       {n.label}
                     </text>
                   </motion.g>
