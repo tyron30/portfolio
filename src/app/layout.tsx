@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { Space_Grotesk, Inter } from "next/font/google";
 import { QueryProvider } from "@/providers/query-provider";
 import { ThemeProvider } from "@/providers/theme-provider";
@@ -18,16 +18,17 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  verification: { google: "UkOPDRTiDTPJZDNYskqQguw_3HupilNQXubN9RkVuKQ" },
   title: {
-    default: "Tyron Del Valle — IT Specialist",
+    default: "Tyron Del Valle â€” IT Specialist",
     template: "%s | Tyron Del Valle",
   },
   description:
-    "Portfolio of Tyron Del Valle, IT Specialist — projects, certifications, and experience.",
+    "Portfolio of Tyron Del Valle, IT Specialist â€” projects, certifications, and experience.",
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
   openGraph: {
     type: "website",
-    title: "Tyron Del Valle — IT Specialist",
+    title: "Tyron Del Valle â€” IT Specialist",
     description: "Portfolio of Tyron Del Valle, IT Specialist.",
   },
   twitter: {
@@ -53,3 +54,4 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   );
 }
+
