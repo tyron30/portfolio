@@ -1,4 +1,5 @@
-﻿import { CommandPalette } from "@/components/motion/command-palette";
+﻿import { HireCta } from "@/components/public/hire-cta";
+import { CommandPalette } from "@/components/motion/command-palette";
 import { HeadingFX } from "@/components/motion/heading-fx";
 import { SkillsMarquee } from "@/components/public/skills-marquee";
 import { NowCard } from "@/components/public/now-card";
@@ -32,10 +33,12 @@ export default async function PublicLayout({ children }: { children: React.React
       <main>{children}</main>
       <SkillsMarquee />
       <NowCard />
+      <HireCta />
       <Footer fullName={fullName} socialLinks={socialLinks} />
       <ChatbotLoader />
     </>
   );
 }
+
 
 

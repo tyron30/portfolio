@@ -1,3 +1,9 @@
+import { TerminalIntro } from "@/components/public/terminal-intro";
+import { ServicesSection } from "@/components/public/services-section";
+import { NetworkDiagram } from "@/components/public/network-diagram";
+import { CaseStudiesSection } from "@/components/public/case-studies-section";
+import { TestimonialsSection } from "@/components/public/testimonials-section";
+import { StackStrip } from "@/components/public/stack-strip";
 import type { Metadata } from "next";
 import { GraduationCap, Briefcase } from "lucide-react";
 import { Hero } from "@/components/public/hero";
@@ -28,7 +34,7 @@ export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
   const about = await getAbout();
-  const title = about?.full_name ? `${about.full_name} — ${about.headline ?? "Portfolio"}` : "Portfolio";
+  const title = about?.full_name ? `${about.full_name} - ${about.headline ?? "Portfolio"}` : "Portfolio";
   const description = about?.bio?.slice(0, 160) ?? "Professional portfolio and CMS-driven personal site.";
 
   return {
@@ -78,7 +84,9 @@ export default async function HomePage() {
   return (
     <>
       <Hero about={about} resumeUrl={resume?.file_url} socialLinks={socialLinks} />
+      <TerminalIntro about={about} />
       <AboutSection about={about} certificatesCount={certificates.length} />
+      <ServicesSection />
 
       <Timeline
         id="education"
@@ -89,7 +97,7 @@ export default async function HomePage() {
           id: e.id,
           title: e.degree,
           subtitle: e.course ? `${e.course} · ${e.school_name}` : e.school_name,
-          period: e.end_year ? `${e.start_year} – ${e.end_year}` : `${e.start_year} – Present`,
+          period: e.end_year ? `${e.start_year} - ${e.end_year}` : `${e.start_year} - Present`,
           description: e.description,
           logoUrl: e.school_logo_url,
         }))}
@@ -107,7 +115,7 @@ export default async function HomePage() {
           period: `${new Date(e.start_date).toLocaleDateString(undefined, {
             year: "numeric",
             month: "short",
-          })} – ${e.is_current ? "Present" : e.end_date ? new Date(e.end_date).toLocaleDateString(undefined, { year: "numeric", month: "short" }) : ""}`,
+          })} - ${e.is_current ? "Present" : e.end_date ? new Date(e.end_date).toLocaleDateString(undefined, { year: "numeric", month: "short" }) : ""}`,
           description: e.responsibilities,
           logoUrl: e.company_logo_url,
           tags: e.skills,
@@ -115,13 +123,18 @@ export default async function HomePage() {
         }))}
       />
 
+      <NetworkDiagram />
       <ProjectsGrid projects={projects} techStack={techStack} />
+      <CaseStudiesSection />
       <CertificatesGrid certificates={certificates} />
       <SeminarsList seminars={seminars} />
       <TechStackGrid items={techStack} />
       <GalleryMasonry items={gallery} />
       <ResumeSection resume={resume} />
+      <TestimonialsSection />
+      <StackStrip />
       <ContactSection contactInfo={contactInfo} />
     </>
   );
 }
+

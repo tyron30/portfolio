@@ -27,7 +27,7 @@ interface TechStackEntry {
 
 interface ProjectsGridProps {
   projects: Project[];
-  /** Used to look up a logo for each tech tag by name â€” from the Tech Stack admin module. */
+  /** Used to look up a logo for each tech tag by name - from the Tech Stack admin module. */
   techStack?: TechStackEntry[];
 }
 
@@ -84,7 +84,7 @@ export function ProjectsGrid({ projects, techStack = [] }: ProjectsGridProps) {
                         No preview
                       </div>
                     )}
-                    {/* Browser-chrome mockup â€” fades in on hover to frame the screenshot like a live window */}
+                    {/* Browser-chrome mockup - fades in on hover to frame the screenshot like a live window */}
                     <div className="pointer-events-none absolute inset-x-0 top-0 flex items-center gap-1.5 bg-background/90 px-3 py-2 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
                       <span className="h-2 w-2 rounded-full bg-red-400/70" />
                       <span className="h-2 w-2 rounded-full bg-indigo-400/70" />

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -11,6 +11,9 @@ import {
   FolderKanban,
   Award,
   Presentation,
+  Wrench,
+  Quote,
+  Lightbulb,
   Images,
   Code2,
   Share2,
@@ -40,6 +43,9 @@ const NAV_GROUPS = [
       { href: "/admin/projects", label: "Projects", icon: FolderKanban },
       { href: "/admin/certificates", label: "Certificates", icon: Award },
       { href: "/admin/seminars", label: "Seminars", icon: Presentation },
+      { href: "/admin/services", label: "Services", icon: Wrench },
+      { href: "/admin/case-studies", label: "Case Studies", icon: Lightbulb },
+      { href: "/admin/testimonials", label: "References", icon: Quote },
       { href: "/admin/gallery", label: "Gallery", icon: Images },
       { href: "/admin/tech-stack", label: "Tech Stack", icon: Code2 },
       { href: "/admin/resume", label: "Resume", icon: FileText },
@@ -97,3 +103,4 @@ export function AdminNav() {
     </nav>
   );
 }
+

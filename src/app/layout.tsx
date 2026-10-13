@@ -20,15 +20,15 @@ const inter = Inter({
 export const metadata: Metadata = {
   verification: { google: "UkOPDRTiDTPJZDNYskqQguw_3HupilNQXubN9RkVuKQ" },
   title: {
-    default: "Tyron Del Valle â€” IT Specialist",
+    default: "Tyron Del Valle” IT Specialist",
     template: "%s | Tyron Del Valle",
   },
   description:
-    "Portfolio of Tyron Del Valle, IT Specialist â€” projects, certifications, and experience.",
+    "Portfolio of Tyron Del Valle, IT Specialist” projects, certifications, and experience.",
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
   openGraph: {
     type: "website",
-    title: "Tyron Del Valle â€” IT Specialist",
+    title: "Tyron Del Valle” IT Specialist",
     description: "Portfolio of Tyron Del Valle, IT Specialist.",
   },
   twitter: {

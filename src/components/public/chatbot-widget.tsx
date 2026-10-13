@@ -70,7 +70,7 @@ export function ChatbotWidget() {
     } catch {
       setMessages((prev) => {
         const copy = [...prev];
-        copy[copy.length - 1] = { role: "assistant", content: "Connection error â€” please try again." };
+        copy[copy.length - 1] = { role: "assistant", content: "Connection error - please try again." };
         return copy;
       });
     } finally {
