@@ -1,4 +1,8 @@
-﻿import { SiteEnhancements } from "@/components/motion/site-enhancements";
+﻿import { CommandPalette } from "@/components/motion/command-palette";
+import { HeadingFX } from "@/components/motion/heading-fx";
+import { SkillsMarquee } from "@/components/public/skills-marquee";
+import { NowCard } from "@/components/public/now-card";
+import { SiteEnhancements } from "@/components/motion/site-enhancements";
 import { Navbar } from "@/components/public/navbar";
 import { Footer } from "@/components/public/footer";
 import { ScrollProgress } from "@/components/public/scroll-progress";
@@ -22,11 +26,16 @@ export default async function PublicLayout({ children }: { children: React.React
       <LoadingScreen />
       <ScrollProgress />
       <SiteEnhancements name={fullName} />
+      <CommandPalette />
+      <HeadingFX />
       <Navbar fullName={fullName} resumeUrl={resume?.file_url} />
       <main>{children}</main>
+      <SkillsMarquee />
+      <NowCard />
       <Footer fullName={fullName} socialLinks={socialLinks} />
       <ChatbotLoader />
     </>
   );
 }
+
 
