@@ -11,7 +11,6 @@ import { AboutSection } from "@/components/public/about-section";
 import { Timeline } from "@/components/public/timeline";
 import { ProjectsGrid } from "@/components/public/projects-grid";
 import { CertificatesGrid } from "@/components/public/certificates-grid";
-import { SeminarsList } from "@/components/public/seminars-list";
 import { TechStackGrid } from "@/components/public/tech-stack-grid";
 import { GalleryMasonry } from "@/components/public/gallery-masonry";
 import { ResumeSection } from "@/components/public/resume-section";
@@ -127,7 +126,6 @@ export default async function HomePage() {
       <ProjectsGrid projects={projects} techStack={techStack} />
       <CaseStudiesSection />
       <CertificatesGrid certificates={certificates} />
-      <SeminarsList seminars={seminars} />
       <TechStackGrid items={techStack} />
       <GalleryMasonry items={gallery} />
       <ResumeSection resume={resume} />

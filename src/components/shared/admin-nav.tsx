@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -42,7 +42,6 @@ const NAV_GROUPS = [
     items: [
       { href: "/admin/projects", label: "Projects", icon: FolderKanban },
       { href: "/admin/certificates", label: "Certificates", icon: Award },
-      { href: "/admin/seminars", label: "Seminars", icon: Presentation },
       { href: "/admin/services", label: "Services", icon: Wrench },
       { href: "/admin/case-studies", label: "Case Studies", icon: Lightbulb },
       { href: "/admin/testimonials", label: "References", icon: Quote },
