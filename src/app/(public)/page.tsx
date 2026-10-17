@@ -1,3 +1,4 @@
+import { AiToolsSection } from "@/components/public/ai-tools-section";
 import { TerminalIntro } from "@/components/public/terminal-intro";
 import { ServicesSection } from "@/components/public/services-section";
 import { NetworkDiagram } from "@/components/public/network-diagram";
@@ -127,6 +128,7 @@ export default async function HomePage() {
       <CaseStudiesSection />
       <CertificatesGrid certificates={certificates} />
       <TechStackGrid items={techStack} />
+      <AiToolsSection />
       <GalleryMasonry items={gallery} />
       <ResumeSection resume={resume} />
       <TestimonialsSection />

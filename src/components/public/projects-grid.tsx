@@ -1,7 +1,11 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
-import { Github, ExternalLink, PlayCircle } from "lucide-react";
+import { Github, ExternalLink, PlayCircle, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Reveal } from "@/components/motion/reveal";
 import { StaggerContainer, StaggerItem } from "@/components/motion/stagger";
 import { TiltCard } from "@/components/motion/tilt-card";
@@ -49,7 +53,31 @@ function TechBadge({ tag, iconUrl }: { tag: string; iconUrl?: string | null }) {
   );
 }
 
+function ProjectLinks({ project }: { project: Project }) {
+  const cls = "flex items-center gap-1 text-muted-foreground hover:text-primary";
+  return (
+    <>
+      {project.github_url && (
+        <a href={project.github_url} target="_blank" rel="noopener noreferrer" className={cls}>
+          <Github className="h-4 w-4" /> Code
+        </a>
+      )}
+      {project.live_url && (
+        <a href={project.live_url} target="_blank" rel="noopener noreferrer" className={cls}>
+          <ExternalLink className="h-4 w-4" /> Live
+        </a>
+      )}
+      {project.video_url && (
+        <a href={project.video_url} target="_blank" rel="noopener noreferrer" className={cls}>
+          <PlayCircle className="h-4 w-4" /> Demo
+        </a>
+      )}
+    </>
+  );
+}
+
 export function ProjectsGrid({ projects, techStack = [] }: ProjectsGridProps) {
+  const [selected, setSelected] = useState<Project | null>(null);
   const iconByName = new Map(
     techStack.filter((t) => t.icon_url).map((t) => [t.name.trim().toLowerCase(), t.icon_url])
   );
@@ -69,8 +97,11 @@ export function ProjectsGrid({ projects, techStack = [] }: ProjectsGridProps) {
           {projects.map((project) => (
             <StaggerItem key={project.id}>
               <TiltCard>
-                <Card className="group overflow-hidden transition-shadow hover:shadow-xl">
-                  <div className="relative aspect-video overflow-hidden bg-muted">
+                <Card className="group flex h-full flex-col overflow-hidden transition-shadow hover:shadow-xl">
+                  <div
+                    className="relative aspect-video cursor-pointer overflow-hidden bg-muted"
+                    onClick={() => setSelected(project)}
+                  >
                     {project.cover_image_url ? (
                       <Image
                         src={project.cover_image_url}
@@ -84,7 +115,6 @@ export function ProjectsGrid({ projects, techStack = [] }: ProjectsGridProps) {
                         No preview
                       </div>
                     )}
-                    {/* Browser-chrome mockup - fades in on hover to frame the screenshot like a live window */}
                     <div className="pointer-events-none absolute inset-x-0 top-0 flex items-center gap-1.5 bg-background/90 px-3 py-2 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
                       <span className="h-2 w-2 rounded-full bg-red-400/70" />
                       <span className="h-2 w-2 rounded-full bg-indigo-400/70" />
@@ -99,10 +129,19 @@ export function ProjectsGrid({ projects, techStack = [] }: ProjectsGridProps) {
                       </Badge>
                     )}
                   </div>
-                  <CardContent className="p-5">
+                  <CardContent className="flex flex-1 flex-col p-5">
                     <h3 className="font-semibold">{project.title}</h3>
                     {project.description && (
-                      <p className="mt-1.5 line-clamp-2 text-sm text-muted-foreground">{project.description}</p>
+                      <>
+                        <p className="mt-1.5 line-clamp-2 text-sm text-muted-foreground">{project.description}</p>
+                        <button
+                          type="button"
+                          onClick={() => setSelected(project)}
+                          className="mt-2 inline-flex w-fit items-center gap-1 text-xs font-semibold text-primary transition-all hover:gap-2"
+                        >
+                          Read full details <ArrowRight className="h-3.5 w-3.5" />
+                        </button>
+                      </>
                     )}
 
                     {!!project.tech_tags?.length && (
@@ -110,40 +149,14 @@ export function ProjectsGrid({ projects, techStack = [] }: ProjectsGridProps) {
                         {project.tech_tags.slice(0, 5).map((tag) => (
                           <TechBadge key={tag} tag={tag} iconUrl={iconByName.get(tag.trim().toLowerCase())} />
                         ))}
+                        {project.tech_tags.length > 5 && (
+                          <span className="px-1 text-xs text-muted-foreground">+{project.tech_tags.length - 5}</span>
+                        )}
                       </div>
                     )}
 
-                    <div className="mt-4 flex gap-3 text-sm">
-                      {project.github_url && (
-                        <a
-                          href={project.github_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-1 text-muted-foreground hover:text-primary"
-                        >
-                          <Github className="h-4 w-4" /> Code
-                        </a>
-                      )}
-                      {project.live_url && (
-                        <a
-                          href={project.live_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-1 text-muted-foreground hover:text-primary"
-                        >
-                          <ExternalLink className="h-4 w-4" /> Live
-                        </a>
-                      )}
-                      {project.video_url && (
-                        <a
-                          href={project.video_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-1 text-muted-foreground hover:text-primary"
-                        >
-                          <PlayCircle className="h-4 w-4" /> Demo
-                        </a>
-                      )}
+                    <div className="mt-auto flex gap-3 pt-4 text-sm">
+                      <ProjectLinks project={project} />
                     </div>
                   </CardContent>
                 </Card>
@@ -152,6 +165,47 @@ export function ProjectsGrid({ projects, techStack = [] }: ProjectsGridProps) {
           ))}
         </StaggerContainer>
       )}
+
+      <Dialog open={!!selected} onOpenChange={(o) => !o && setSelected(null)}>
+        <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto">
+          {selected && (
+            <>
+              <DialogTitle>{selected.title}</DialogTitle>
+              {selected.cover_image_url && (
+                <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-muted">
+                  <Image
+                    src={selected.cover_image_url}
+                    alt={selected.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 672px"
+                    className="object-cover"
+                  />
+                </div>
+              )}
+              {selected.status && (
+                <Badge variant="secondary" className="w-fit capitalize">
+                  {selected.status.replace(/_/g, " ")}
+                </Badge>
+              )}
+              {selected.description && (
+                <p className="whitespace-pre-line text-sm leading-relaxed text-muted-foreground">
+                  {selected.description}
+                </p>
+              )}
+              {!!selected.tech_tags?.length && (
+                <div className="flex flex-wrap gap-1.5">
+                  {selected.tech_tags.map((tag) => (
+                    <TechBadge key={tag} tag={tag} iconUrl={iconByName.get(tag.trim().toLowerCase())} />
+                  ))}
+                </div>
+              )}
+              <div className="flex flex-wrap gap-4 border-t border-border pt-4 text-sm">
+                <ProjectLinks project={selected} />
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }
