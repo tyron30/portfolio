@@ -1,4 +1,5 @@
-﻿import { HireCta } from "@/components/public/hire-cta";
+import { PersonJsonLd } from "@/components/public/person-jsonld";
+import { HireCta } from "@/components/public/hire-cta";
 import { CommandPalette } from "@/components/motion/command-palette";
 import { HeadingFX } from "@/components/motion/heading-fx";
 import { SkillsMarquee } from "@/components/public/skills-marquee";
@@ -34,6 +35,7 @@ export default async function PublicLayout({ children }: { children: React.React
       <SkillsMarquee />
       <NowCard />
       <HireCta />
+      <PersonJsonLd />
       <Footer fullName={fullName} socialLinks={socialLinks} />
       <ChatbotLoader />
     </>
