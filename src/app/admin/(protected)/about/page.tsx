@@ -39,6 +39,7 @@ const fields: CrudField[] = [
     type: "tags",
     hint: "Broader competencies NOT already listed in Tech Stack — e.g. Network Administration, IT Security Awareness, Customer Service. Don't repeat named tools/technologies here (those belong in Tech Stack).",
   },
+  { name: "birthdate", label: "Birthdate", type: "date", hint: "Only your age is shown on the site, never the date itself." },
   { name: "location", label: "Location", type: "text" },
   { name: "email", label: "Email", type: "text" },
   { name: "phone", label: "Phone", type: "text" },
