@@ -102,6 +102,7 @@ export type SocialLink = z.infer<typeof socialLinkSchema> & { id: string };
 // ---- About (singleton) ----
 export const aboutSchema = z.object({
   key_skills: z.array(z.string()).default([]),
+  birthdate: z.string().nullable().optional(),
   full_name: z.string().min(1, "Full name is required"),
   role_tag: z.string().max(40, "Keep it short — this renders huge on the Hero").optional(),
   headline: z.string().optional(),

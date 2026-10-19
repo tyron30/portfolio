@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { MapPin, Mail, Phone, CheckCircle2 } from "lucide-react";
+import { Cake, MapPin, Mail, Phone, CheckCircle2 } from "lucide-react";
 import { Reveal } from "@/components/motion/reveal";
 import { StaggerContainer, StaggerItem } from "@/components/motion/stagger";
 import { AnimatedCounter } from "@/components/motion/animated-counter";
@@ -7,6 +7,7 @@ import { AnimatedCounter } from "@/components/motion/animated-counter";
 interface AboutSectionProps {
   about: {
     full_name: string;
+    birthdate?: string | null;
     bio?: string | null;
     location?: string | null;
     email?: string | null;
@@ -20,10 +21,23 @@ interface AboutSectionProps {
   certificatesCount?: number;
 }
 
+function ageFrom(d?: string | null): number | null {
+  if (!d) return null;
+  const mdy = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec(d.trim());
+  const b = mdy ? new Date(Number(mdy[3]), Number(mdy[1]) - 1, Number(mdy[2])) : new Date(d);
+  if (isNaN(b.getTime())) return null;
+  const n = new Date();
+  let a = n.getFullYear() - b.getFullYear();
+  const m = n.getMonth() - b.getMonth();
+  if (m < 0 || (m === 0 && n.getDate() < b.getDate())) a--;
+  return a > 0 && a < 120 ? a : null;
+}
+
 export function AboutSection({ about, certificatesCount = 0 }: AboutSectionProps) {
   if (!about) return null;
 
   const firstName = about.full_name.split(" ")[0] ?? about.full_name;
+  const age = ageFrom(about.birthdate);
 
   const stats = [
     { value: about.years_experience ?? 0, label: "Years Experience" },
@@ -43,6 +57,11 @@ export function AboutSection({ about, certificatesCount = 0 }: AboutSectionProps
           {about.bio && <p className="mt-6 max-w-lg text-lg leading-relaxed text-neutral-400">{about.bio}</p>}
 
           <div className="mt-6 flex flex-wrap gap-5 text-sm text-neutral-400">
+            {age !== null && (
+              <span className="flex items-center gap-1.5">
+                <Cake className="h-4 w-4" /> {age} years old
+              </span>
+            )}
             {about.location && (
               <span className="flex items-center gap-1.5">
                 <MapPin className="h-4 w-4" /> {about.location}
