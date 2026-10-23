@@ -1,3 +1,4 @@
+import { SiteBackground } from "@/components/public/site-background";
 import { PersonJsonLd } from "@/components/public/person-jsonld";
 import { HireCta } from "@/components/public/hire-cta";
 import { CommandPalette } from "@/components/motion/command-palette";
@@ -35,6 +36,7 @@ export default async function PublicLayout({ children }: { children: React.React
       <SkillsMarquee />
       <NowCard />
       <HireCta />
+      <SiteBackground />
       <PersonJsonLd />
       <Footer fullName={fullName} socialLinks={socialLinks} />
       <ChatbotLoader />

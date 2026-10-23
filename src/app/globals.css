@@ -1,4 +1,4 @@
-﻿@tailwind base;
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -9,44 +9,44 @@
   }
 
   :root {
-    --background: 210 40% 97%;
-    --foreground: 222 47% 11%;
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
-    --primary: 221 83% 53%;
+    --background: 222 84% 5%;
+    --foreground: 210 40% 96%;
+    --card: 222 47% 8%;
+    --card-foreground: 210 40% 96%;
+    --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 214 32% 94%;
-    --secondary-foreground: 222 47% 11%;
-    --muted: 214 28% 93%;
-    --muted-foreground: 215 16% 40%;
-    --accent: 214 95% 94%;
-    --accent-foreground: 224 76% 38%;
-    --destructive: 0 72% 51%;
+    --secondary: 222 35% 14%;
+    --secondary-foreground: 210 40% 96%;
+    --muted: 222 33% 12%;
+    --muted-foreground: 215 20% 70%;
+    --accent: 222 40% 16%;
+    --accent-foreground: 199 89% 78%;
+    --destructive: 0 72% 55%;
     --destructive-foreground: 0 0% 100%;
-    --border: 214 20% 87%;
-    --input: 214 20% 87%;
-    --ring: 221 83% 53%;
+    --border: 222 30% 18%;
+    --input: 222 30% 18%;
+    --ring: 199 89% 55%;
     --radius: 0.85rem;
   }
 
   .dark {
-    --background: 210 40% 97%;
-    --foreground: 222 47% 11%;
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
-    --primary: 221 83% 53%;
+    --background: 222 84% 5%;
+    --foreground: 210 40% 96%;
+    --card: 222 47% 8%;
+    --card-foreground: 210 40% 96%;
+    --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 214 32% 94%;
-    --secondary-foreground: 222 47% 11%;
-    --muted: 214 28% 93%;
-    --muted-foreground: 215 16% 40%;
-    --accent: 214 95% 94%;
-    --accent-foreground: 224 76% 38%;
-    --destructive: 0 72% 51%;
+    --secondary: 222 35% 14%;
+    --secondary-foreground: 210 40% 96%;
+    --muted: 222 33% 12%;
+    --muted-foreground: 215 20% 70%;
+    --accent: 222 40% 16%;
+    --accent-foreground: 199 89% 78%;
+    --destructive: 0 72% 55%;
     --destructive-foreground: 0 0% 100%;
-    --border: 214 20% 87%;
-    --input: 214 20% 87%;
-    --ring: 221 83% 53%;
+    --border: 222 30% 18%;
+    --input: 222 30% 18%;
+    --ring: 199 89% 55%;
   }
 
   * {
@@ -63,7 +63,7 @@
 
 @layer utilities {
   .glass {
-    @apply bg-white/60 backdrop-blur-xl border border-black/5;
+    @apply bg-white/[0.04] backdrop-blur-xl border border-white/10;
   }
   /* For deliberately dark, color-blocked sections (like the About "Hello,
      I'm..." block) that stay dark even though the site theme is light. */
@@ -71,7 +71,7 @@
     @apply bg-white/5 backdrop-blur-xl border border-white/10;
   }
   .text-gradient {
-    @apply bg-gradient-to-r from-primary to-indigo-500 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-400 bg-clip-text text-transparent;
   }
 }
 
@@ -142,3 +142,25 @@ main h2[data-fx="in"]::after { width: 4.5rem; }
 main h2.text-center[data-fx]::after, main h2[class*="mx-auto"][data-fx]::after { margin-inline: auto; }
 @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
 /* UX-POLISH-2-END */
+
+/* DARK-THEME-START */
+:root { color-scheme: dark; }
+.aurora { opacity: .2; }
+.glass:hover, .spot:hover {
+  border-color: hsl(var(--primary) / 0.5);
+  box-shadow: 0 0 0 1px hsl(var(--primary) / 0.18), 0 20px 50px -20px hsl(var(--primary) / 0.5);
+}
+.card-glow { position: relative; }
+.card-glow::before {
+  content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1px; pointer-events: none;
+  background: linear-gradient(135deg, rgba(34,211,238,.55), rgba(99,102,241,.0) 40%, rgba(59,130,246,.55));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0; transition: opacity .35s ease;
+}
+.card-glow:hover::before { opacity: 1; }
+/* DARK-THEME-END */
+
+/* SITE-BG-START: let the fixed cinematic backdrop show through every section */
+main section { background: transparent !important; }
+main section.aurora-host .aurora, main .aurora { display: none; }
+/* SITE-BG-END */

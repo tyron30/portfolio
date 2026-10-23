@@ -1,8 +1,9 @@
 import Image from "next/image";
-import { Cake, MapPin, Mail, Phone, CheckCircle2 } from "lucide-react";
+import { Cake, MapPin, Mail, Phone, Sparkles, Award, Briefcase } from "lucide-react";
 import { Reveal } from "@/components/motion/reveal";
 import { StaggerContainer, StaggerItem } from "@/components/motion/stagger";
 import { AnimatedCounter } from "@/components/motion/animated-counter";
+import { TiltLayer } from "@/components/public/tilt-layer";
 
 interface AboutSectionProps {
   about: {
@@ -33,59 +34,92 @@ function ageFrom(d?: string | null): number | null {
   return a > 0 && a < 120 ? a : null;
 }
 
+/** Splits the bio into a short lead sentence plus a few scannable highlights. */
+function splitBio(bio?: string | null): { lead: string; points: string[] } {
+  const parts = (bio ?? "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .split(/(?<=[.!?])\s+/)
+    .filter(Boolean);
+  const [lead = "", ...rest] = parts;
+  return { lead, points: rest.slice(0, 4) };
+}
+
+const FADE =
+  "radial-gradient(ellipse 74% 90% at 50% 36%, #000 56%, rgba(0,0,0,0.6) 74%, transparent 100%)";
+
 export function AboutSection({ about, certificatesCount = 0 }: AboutSectionProps) {
   if (!about) return null;
 
   const firstName = about.full_name.split(" ")[0] ?? about.full_name;
   const age = ageFrom(about.birthdate);
+  const { lead, points } = splitBio(about.bio);
+  const photo = (about.about_image_url || about.profile_image_url) as string | undefined;
+  const years = about.years_experience ?? 0;
 
   const stats = [
-    { value: about.years_experience ?? 0, label: "Years Experience" },
+    { value: years, label: "Years Experience" },
     { value: about.projects_completed ?? 0, label: "Projects Completed" },
-    { value: certificatesCount, label: "Certifications Earned" },
+    { value: certificatesCount, label: "Certifications" },
   ];
 
+  const chips = [
+    age !== null ? { icon: Cake, text: `${age} years old` } : null,
+    about.location ? { icon: MapPin, text: about.location } : null,
+    about.email ? { icon: Mail, text: about.email, href: `mailto:${about.email}` } : null,
+    about.phone ? { icon: Phone, text: about.phone, href: `tel:${about.phone}` } : null,
+  ].filter(Boolean) as { icon: typeof Cake; text: string; href?: string }[];
+
   return (
-    <section id="about" className="bg-slate-950 py-24 text-neutral-50">
-      <div className="container grid items-center gap-16 lg:grid-cols-[1fr_0.8fr]">
+    <section id="about" className="relative py-24 text-neutral-50">
+      <div className="container grid items-center gap-14 lg:grid-cols-[1.1fr_0.9fr]">
         <Reveal>
-          <p className="text-sm font-semibold uppercase tracking-widest text-primary">Hello,</p>
-          <h2 className="mt-2 font-display text-4xl font-bold leading-tight sm:text-5xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.25em] text-cyan-300">Hello,</p>
+          <h2 className="mt-2 font-display text-4xl font-bold leading-tight sm:text-6xl">
             I&apos;m <span className="text-gradient">{firstName}</span>
           </h2>
+          <div className="mt-3 h-1 w-20 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500" />
 
-          {about.bio && <p className="mt-6 max-w-lg text-lg leading-relaxed text-neutral-400">{about.bio}</p>}
+          {lead && <p className="mt-6 max-w-xl text-xl font-medium leading-snug text-white sm:text-2xl">{lead}</p>}
 
-          <div className="mt-6 flex flex-wrap gap-5 text-sm text-neutral-400">
-            {age !== null && (
-              <span className="flex items-center gap-1.5">
-                <Cake className="h-4 w-4" /> {age} years old
-              </span>
-            )}
-            {about.location && (
-              <span className="flex items-center gap-1.5">
-                <MapPin className="h-4 w-4" /> {about.location}
-              </span>
-            )}
-            {about.email && (
-              <a href={`mailto:${about.email}`} className="flex items-center gap-1.5 hover:text-primary">
-                <Mail className="h-4 w-4" /> {about.email}
-              </a>
-            )}
-            {about.phone && (
-              <span className="flex items-center gap-1.5">
-                <Phone className="h-4 w-4" /> {about.phone}
-              </span>
-            )}
-          </div>
+          {points.length > 0 && (
+            <StaggerContainer className="mt-5 max-w-xl space-y-3">
+              {points.map((p) => (
+                <StaggerItem key={p}>
+                  <div className="flex gap-3 text-base leading-relaxed text-slate-300">
+                    <Sparkles className="mt-1 h-4 w-4 shrink-0 text-cyan-300" />
+                    <span>{p}</span>
+                  </div>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+          )}
+
+          {chips.length > 0 && (
+            <div className="mt-6 flex flex-wrap gap-2.5">
+              {chips.map(({ icon: Icon, text, href }) => {
+                const cls =
+                  "inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-3.5 py-1.5 text-sm text-slate-200 backdrop-blur transition hover:border-cyan-300/50 hover:text-white";
+                return href ? (
+                  <a key={text} href={href} className={cls}>
+                    <Icon className="h-4 w-4 text-cyan-300" /> {text}
+                  </a>
+                ) : (
+                  <span key={text} className={cls}>
+                    <Icon className="h-4 w-4 text-cyan-300" /> {text}
+                  </span>
+                );
+              })}
+            </div>
+          )}
 
           {!!about.key_skills?.length && (
             <div className="mt-6">
-              <p className="mb-2.5 text-xs font-semibold uppercase tracking-widest text-neutral-500">Key Skills</p>
+              <p className="mb-2.5 text-xs font-semibold uppercase tracking-widest text-slate-400">Key Skills</p>
               <StaggerContainer className="flex flex-wrap gap-2">
                 {about.key_skills.map((skill) => (
                   <StaggerItem key={skill}>
-                    <span className="inline-block rounded-lg border border-primary/30 bg-primary/10 px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-primary">
+                    <span className="inline-block rounded-lg border border-cyan-400/30 bg-cyan-400/10 px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-cyan-200">
                       {skill}
                     </span>
                   </StaggerItem>
@@ -94,41 +128,54 @@ export function AboutSection({ about, certificatesCount = 0 }: AboutSectionProps
             </div>
           )}
 
-          <StaggerContainer className="mt-8 space-y-4">
+          <StaggerContainer className="mt-8 grid max-w-xl grid-cols-3 gap-3">
             {stats.map((stat) => (
               <StaggerItem key={stat.label}>
-                <div className="flex items-center gap-3">
-                  <CheckCircle2 className="h-5 w-5 shrink-0 text-primary" />
-                  <AnimatedCounter value={stat.value} suffix="+" className="text-xl font-bold text-neutral-50" />
-                  <span className="text-neutral-400">{stat.label}</span>
+                <div className="glass card-glow rounded-2xl p-4 text-center">
+                  <AnimatedCounter
+                    value={stat.value}
+                    suffix="+"
+                    className="text-gradient font-display text-3xl font-bold sm:text-4xl"
+                  />
+                  <p className="mt-1 text-xs leading-tight text-slate-400 sm:text-sm">{stat.label}</p>
                 </div>
               </StaggerItem>
             ))}
           </StaggerContainer>
         </Reveal>
 
-        <Reveal delay={0.15} className="relative mx-auto aspect-[4/5] w-full max-w-sm">
-          <div
-            className="absolute -right-8 -top-8 -z-10 h-40 w-40 opacity-40 sm:h-48 sm:w-48"
-            style={{
-              backgroundImage: "radial-gradient(hsl(var(--primary) / 0.5) 1.5px, transparent 1.5px)",
-              backgroundSize: "14px 14px",
-            }}
-          />
-          <div className="relative h-full w-full">
-            {about.about_image_url || about.profile_image_url ? (
+        <Reveal delay={0.15} className="relative mx-auto aspect-[4/5] w-full max-w-sm sm:max-w-md">
+          {/* glow + rings behind the portrait */}
+          <div className="pointer-events-none absolute left-1/2 top-[46%] -z-10 h-[90%] w-[90%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-400/15 blur-3xl" />
+          <div className="pointer-events-none absolute left-1/2 top-[46%] -z-10 aspect-square w-[112%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-cyan-400/25" />
+          <div className="pointer-events-none absolute left-1/2 top-[46%] -z-10 aspect-square w-[86%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-blue-400/25" />
+          {/* light pool under the shoulders */}
+          <div className="pointer-events-none absolute -bottom-1 left-1/2 -z-10 h-14 w-[80%] -translate-x-1/2 rounded-[100%] bg-cyan-400/30 blur-2xl" />
+          <div className="pointer-events-none absolute bottom-3 left-1/2 -z-10 h-px w-[66%] -translate-x-1/2 bg-gradient-to-r from-transparent via-cyan-300/70 to-transparent" />
+
+          <TiltLayer className="relative h-full w-full">
+            {photo ? (
               <Image
-                src={(about.about_image_url || about.profile_image_url) as string}
+                src={photo}
                 alt={about.full_name}
                 fill
-                sizes="(max-width: 1024px) 80vw, 384px"
-                className="object-contain object-bottom drop-shadow-2xl"
+                sizes="(max-width: 1024px) 80vw, 448px"
+                style={{ WebkitMaskImage: FADE, maskImage: FADE }}
+                className="object-contain object-top"
               />
             ) : (
-              <div className="flex h-full items-center justify-center text-6xl font-bold text-neutral-500">
+              <div className="flex h-full items-center justify-center text-6xl font-bold text-slate-500">
                 {firstName.charAt(0)}
               </div>
             )}
+          </TiltLayer>
+
+          {/* floating glass badges */}
+          <div className="glass absolute -left-2 top-[18%] flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-semibold text-white sm:-left-6 sm:text-sm">
+            <Briefcase className="h-4 w-4 text-cyan-300" /> {years}+ yrs experience
+          </div>
+          <div className="glass absolute -right-2 bottom-[22%] flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-semibold text-white sm:-right-6 sm:text-sm">
+            <Award className="h-4 w-4 text-cyan-300" /> {certificatesCount}+ certifications
           </div>
         </Reveal>
       </div>
