@@ -12,11 +12,19 @@ const fields: CrudField[] = [
   { name: "is_current", label: "Currently Working Here", type: "boolean" },
   { name: "company_logo_url", label: "Company Logo", type: "image", bucket: "logos", showInTable: false },
   {
+    name: "certificate_url",
+    label: "Certificate of Completion (optional)",
+    type: "image",
+    bucket: "logos",
+    showInTable: false,
+    hint: "Shows a 'See Completion Certificate' button on this entry. Leave empty for none.",
+  },
+  {
     name: "responsibilities",
     label: "Responsibilities",
     type: "textarea",
     showInTable: false,
-    hint: "One point per line — each line renders as a bullet on the public site.",
+    hint: "One point per line - each line renders as a bullet on the public site.",
   },
   { name: "achievements", label: "Achievements", type: "textarea", showInTable: false },
   {
@@ -24,7 +32,7 @@ const fields: CrudField[] = [
     label: "Skills / Tags",
     type: "tags",
     showInTable: false,
-    hint: "e.g. PC Troubleshooting, User Support, LAN Maintenance — shown as highlighted badges.",
+    hint: "e.g. PC Troubleshooting, User Support, LAN Maintenance - shown as highlighted badges.",
   },
   { name: "sort_order", label: "Sort Order", type: "number", showInTable: false },
 ];

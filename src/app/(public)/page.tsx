@@ -117,7 +117,7 @@ export default async function HomePage() {
             month: "short",
           })} - ${e.is_current ? "Present" : e.end_date ? new Date(e.end_date).toLocaleDateString(undefined, { year: "numeric", month: "short" }) : ""}`,
           description: e.responsibilities,
-          logoUrl: e.company_logo_url,
+          logoUrl: e.company_logo_url, certificateUrl: e.certificate_url,
           tags: e.skills,
           isCurrent: e.is_current,
         }))}

@@ -1,5 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 import { Reveal } from "@/components/motion/reveal";
+import { CertificateButton } from "@/components/public/certificate-button";
 
 interface TimelineItem {
   id: string;
@@ -10,6 +11,7 @@ interface TimelineItem {
   logoUrl?: string | null;
   tags?: string[] | null;
   isCurrent?: boolean;
+  certificateUrl?: string | null;
 }
 
 interface TimelineProps {
@@ -17,7 +19,7 @@ interface TimelineProps {
   title: string;
   items: TimelineItem[];
   emptyLabel: string;
-  /** Icon shown in each timeline node — e.g. GraduationCap for Education, Briefcase for Experience. */
+  /** Icon shown in each timeline node - e.g. GraduationCap for Education, Briefcase for Experience. */
   icon: LucideIcon;
 }
 
@@ -37,7 +39,7 @@ function DescriptionBlock({ text }: { text: string }) {
       {lines.map((line, i) => (
         <li key={i} className="flex items-start gap-2.5 text-sm leading-relaxed text-foreground/80">
           <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-          <span>{line.replace(/^[-•]\s*/, "")}</span>
+          <span>{line.replace(/^[-\u2022]\s*/, "")}</span>
         </li>
       ))}
     </ul>
@@ -55,7 +57,7 @@ export function Timeline({ id, title, items, emptyLabel, icon: SectionIcon }: Ti
         <p className="mt-8 text-center text-muted-foreground">{emptyLabel}</p>
       ) : (
         <div className="relative mx-auto mt-16 max-w-3xl">
-          {/* Gradient vertical line, fixed to the left — single column avoids
+          {/* Gradient vertical line, fixed to the left - single column avoids
               the dead-space problem of a left/right alternating layout. */}
           <div className="absolute left-6 top-2 h-[calc(100%-1rem)] w-px bg-gradient-to-b from-primary/50 via-border to-transparent sm:left-7" />
 
@@ -111,6 +113,12 @@ export function Timeline({ id, title, items, emptyLabel, icon: SectionIcon }: Ti
                           {tag}
                         </span>
                       ))}
+                    </div>
+                  )}
+
+                  {item.certificateUrl && (
+                    <div className={`flex ${item.tags?.length ? "mt-4" : "mt-4 border-t border-border pt-4"}`}>
+                      <CertificateButton url={item.certificateUrl} />
                     </div>
                   )}
                 </div>
