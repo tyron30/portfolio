@@ -9,23 +9,23 @@
   }
 
   :root {
-    --background: 222 84% 5%;
-    --foreground: 210 40% 96%;
-    --card: 222 47% 8%;
-    --card-foreground: 210 40% 96%;
-    --primary: 217 91% 60%;
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --primary: 221 83% 53%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 222 35% 14%;
-    --secondary-foreground: 210 40% 96%;
-    --muted: 222 33% 12%;
-    --muted-foreground: 215 20% 70%;
-    --accent: 222 40% 16%;
-    --accent-foreground: 199 89% 78%;
-    --destructive: 0 72% 55%;
+    --secondary: 214 32% 91%;
+    --secondary-foreground: 222 47% 11%;
+    --muted: 214 32% 94%;
+    --muted-foreground: 215 16% 38%;
+    --accent: 214 40% 92%;
+    --accent-foreground: 222 47% 20%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
-    --border: 222 30% 18%;
-    --input: 222 30% 18%;
-    --ring: 199 89% 55%;
+    --border: 214 32% 85%;
+    --input: 214 32% 85%;
+    --ring: 221 83% 53%;
     --radius: 0.85rem;
   }
 
@@ -39,13 +39,13 @@
     --secondary: 222 35% 14%;
     --secondary-foreground: 210 40% 96%;
     --muted: 222 33% 12%;
-    --muted-foreground: 215 20% 70%;
+    --muted-foreground: 215 20% 72%;
     --accent: 222 40% 16%;
     --accent-foreground: 199 89% 78%;
     --destructive: 0 72% 55%;
     --destructive-foreground: 0 0% 100%;
-    --border: 222 30% 18%;
-    --input: 222 30% 18%;
+    --border: 222 30% 22%;
+    --input: 222 30% 22%;
     --ring: 199 89% 55%;
   }
 
@@ -144,7 +144,8 @@ main h2.text-center[data-fx]::after, main h2[class*="mx-auto"][data-fx]::after {
 /* UX-POLISH-2-END */
 
 /* DARK-THEME-START */
-:root { color-scheme: dark; }
+:root { color-scheme: light; }
+.dark { color-scheme: dark; }
 .aurora { opacity: .2; }
 .glass:hover, .spot:hover {
   border-color: hsl(var(--primary) / 0.5);
@@ -164,3 +165,47 @@ main h2.text-center[data-fx]::after, main h2[class*="mx-auto"][data-fx]::after {
 main section { background: transparent !important; }
 main section.aurora-host .aurora, main .aurora { display: none; }
 /* SITE-BG-END */
+
+/* LIGHT-MODE-START */
+.hero-light-bg { display: none; }
+html:not(.dark) .hero-light-bg { display: block; }
+
+html:not(.dark) .glass { background: rgba(255,255,255,.75); border-color: rgba(15,23,42,.1); }
+html:not(.dark) .glass:hover, html:not(.dark) .spot:hover {
+  border-color: hsl(var(--primary) / 0.45);
+  box-shadow: 0 12px 30px -14px hsl(var(--primary) / 0.35);
+}
+/* LIGHT-MODE-END */
+
+/* TECH-BG-START */
+@keyframes hud-rot { to { transform: rotate(360deg); } }
+@keyframes trace-flow { to { stroke-dashoffset: -400; } }
+.hud-spin-slow, .hud-spin-rev, .hud-spin-mid {
+  transform-box: fill-box; transform-origin: center; animation: hud-rot 120s linear infinite;
+}
+.hud-spin-rev { animation-duration: 80s; animation-direction: reverse; }
+.hud-spin-mid { animation-duration: 55s; }
+.trace-flow { stroke-dasharray: 60 340; animation: trace-flow 6s linear infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .hud-spin-slow, .hud-spin-rev, .hud-spin-mid, .trace-flow { animation: none; }
+}
+/* TECH-BG-END */
+
+/* DARK-LOGO-START: black logos (Next.js, Vercel...) turn white in dark mode so they stay visible */
+.dark img[alt="Next.js" i], .dark img[alt="NextJS" i], .dark img[alt="Next js" i],
+.dark img[alt="Vercel" i], .dark img[alt="Express" i], .dark img[alt="Express.js" i],
+.dark img[src*="nextjs" i], .dark img[src*="next-js" i], .dark img[src*="vercel" i] {
+  filter: brightness(0) invert(1);
+}
+/* DARK-LOGO-END */
+
+/* SAME-DESIGN-START: same backdrop in light + dark; content colours follow the theme */
+:root { --fx-a: #dbeafe; --fx-b: #eaf2ff; --fx-c: #f8fafc; }
+html.dark { --fx-a: #0c2d63; --fx-b: #06112b; --fx-c: #02040d; }
+
+/* safety net: sections that were written with fixed dark-theme colours adapt in light mode */
+html:not(.dark) main :is(.text-neutral-50, .text-neutral-100, .text-neutral-200, .text-slate-50, .text-slate-100, .text-slate-200) { color: hsl(var(--foreground)); }
+html:not(.dark) main :is(.text-neutral-300, .text-neutral-400, .text-neutral-500, .text-slate-300, .text-slate-400, .text-slate-500) { color: hsl(var(--muted-foreground)); }
+html:not(.dark) main :is(.bg-slate-950, .bg-slate-900, .bg-neutral-950, .bg-neutral-900) { background-color: hsl(var(--card)); }
+html:not(.dark) main [class*="border-white"] { border-color: hsl(var(--border)); }
+/* SAME-DESIGN-END */

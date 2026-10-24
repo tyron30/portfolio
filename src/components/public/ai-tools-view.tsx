@@ -10,7 +10,12 @@ const HUES = [221, 262, 199, 172, 330, 24];
 function Logo({ tool, i }: { tool: AiToolRow; i: number }) {
   if (tool.logo_url) {
     // eslint-disable-next-line @next/next/no-img-element
-    return <img src={tool.logo_url} alt="" className="h-12 w-12 rounded-xl object-contain" loading="lazy" />;
+    return (
+      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white p-1.5 shadow-sm ring-1 ring-black/10">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={tool.logo_url} alt={tool.name} className="max-h-full max-w-full object-contain" loading="lazy" />
+      </span>
+    );
   }
   const h = HUES[i % HUES.length];
   return (

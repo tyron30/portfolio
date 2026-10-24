@@ -7,7 +7,6 @@ import { Download, Mail, Github, Linkedin, Facebook, Instagram, Youtube, Globe }
 import { Button } from "@/components/ui/button";
 import { Magnetic } from "@/components/motion/magnetic";
 import { SplitText } from "@/components/motion/split-text";
-import { RotatingBadge } from "@/components/public/rotating-badge";
 import { TiltLayer } from "@/components/public/tilt-layer";
 
 interface HeroProps {
@@ -60,7 +59,7 @@ export function Hero({ about, resumeUrl, socialLinks }: HeroProps) {
   const photoY = useTransform(scrollYProgress, [0, 1], [0, 50]);
 
   return (
-    <section ref={sectionRef} id="hero" className="relative overflow-x-clip pb-14 pt-28 text-white sm:pt-32">
+    <section ref={sectionRef} id="hero" className="relative isolate overflow-x-clip pb-14 pt-28 text-foreground sm:pt-32">
 
       <motion.div
         initial="hidden"
@@ -71,7 +70,7 @@ export function Hero({ about, resumeUrl, socialLinks }: HeroProps) {
         <div className="relative w-full text-center">
           <motion.div style={reduce ? undefined : { y: textY }}>
             <h1 className="relative z-0 select-none font-display text-5xl font-bold uppercase leading-[0.92] sm:text-7xl md:text-8xl lg:text-9xl">
-              <SplitText text={line1} className="block text-white" />
+              <SplitText text={line1} className="block text-foreground" />
               <motion.span
                 initial={reduce ? false : { opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -136,42 +135,32 @@ export function Hero({ about, resumeUrl, socialLinks }: HeroProps) {
                     className="object-contain object-top transition-opacity duration-500 group-hover:opacity-30"
                   />
                 ) : (
-                  <div className="flex h-full items-center justify-center text-6xl font-bold text-slate-400">
+                  <div className="flex h-full items-center justify-center text-6xl font-bold text-muted-foreground">
                     {fullName.charAt(0)}
                   </div>
                 )}
               </TiltLayer>
             </motion.div>
 
-            <span className="pointer-events-none absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs text-slate-400 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+            <span className="pointer-events-none absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs text-muted-foreground opacity-0 transition-opacity duration-300 group-hover:opacity-100">
               Hover to read full text
             </span>
           </motion.div>
         </div>
 
         {about?.headline && (
-          <motion.p variants={itemVariants} className="mt-8 max-w-md text-lg font-medium text-slate-300">
+          <motion.p variants={itemVariants} className="mt-8 max-w-md text-lg font-medium text-muted-foreground">
             {about.headline} — support, networks, and systems that just work.
           </motion.p>
         )}
 
-      { /*
-      
-      <motion.div variants={itemVariants} className="relative z-10 mt-6 flex justify-center">
-          <div className="flex h-16 w-16 items-center justify-center rounded-full border border-cyan-400/30 bg-slate-900/70 text-cyan-200 shadow-[0_0_24px_rgba(34,211,238,0.2)] backdrop-blur sm:h-20 sm:w-20">
-            <RotatingBadge text="CERTIFIED IT SPECIALIST • NETWORK & SYSTEMS • " size={62} />
-          </div>
-        </motion.div>
-        
-        */ }
-
         <motion.div
           variants={itemVariants}
-          className="mt-4 inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-1.5 text-xs font-medium uppercase tracking-widest text-cyan-200 backdrop-blur"
+          className="mt-6 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-medium uppercase tracking-widest text-primary backdrop-blur"
         >
           <span className="relative flex h-1.5 w-1.5">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-300 opacity-75" />
-            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-cyan-300" />
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
           </span>
           Open to opportunities
         </motion.div>
@@ -191,7 +180,7 @@ export function Hero({ about, resumeUrl, socialLinks }: HeroProps) {
               asChild
               variant="outline"
               size="lg"
-              className="border-white/25 bg-white/5 text-white backdrop-blur hover:bg-white/10 hover:text-white"
+              className="border-border bg-card/50 text-foreground backdrop-blur hover:bg-accent hover:text-foreground"
             >
               <a href="#contact">
                 <Mail className="h-4 w-4" /> Contact Me
@@ -210,7 +199,7 @@ export function Hero({ about, resumeUrl, socialLinks }: HeroProps) {
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/75 backdrop-blur transition-all hover:-translate-y-0.5 hover:border-cyan-300 hover:text-cyan-300 hover:shadow-[0_0_16px_rgba(34,211,238,0.35)]"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card/50 text-foreground/75 backdrop-blur transition-all hover:-translate-y-0.5 hover:border-primary hover:text-primary hover:shadow-[0_0_16px_hsl(var(--primary)/0.35)]"
                   aria-label={link.platform}
                 >
                   <Icon className="h-4 w-4" />

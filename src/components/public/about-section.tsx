@@ -71,23 +71,23 @@ export function AboutSection({ about, certificatesCount = 0 }: AboutSectionProps
   ].filter(Boolean) as { icon: typeof Cake; text: string; href?: string }[];
 
   return (
-    <section id="about" className="relative py-24 text-neutral-50">
+    <section id="about" className="relative py-24 text-foreground">
       <div className="container grid items-center gap-14 lg:grid-cols-[1.1fr_0.9fr]">
         <Reveal>
-          <p className="text-sm font-semibold uppercase tracking-[0.25em] text-cyan-300">Hello,</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.25em] text-primary">Hello,</p>
           <h2 className="mt-2 font-display text-4xl font-bold leading-tight sm:text-6xl">
             I&apos;m <span className="text-gradient">{firstName}</span>
           </h2>
           <div className="mt-3 h-1 w-20 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500" />
 
-          {lead && <p className="mt-6 max-w-xl text-xl font-medium leading-snug text-white sm:text-2xl">{lead}</p>}
+          {lead && <p className="mt-6 max-w-xl text-xl font-medium leading-snug text-foreground sm:text-2xl">{lead}</p>}
 
           {points.length > 0 && (
             <StaggerContainer className="mt-5 max-w-xl space-y-3">
               {points.map((p) => (
                 <StaggerItem key={p}>
-                  <div className="flex gap-3 text-base leading-relaxed text-slate-300">
-                    <Sparkles className="mt-1 h-4 w-4 shrink-0 text-cyan-300" />
+                  <div className="flex gap-3 text-base leading-relaxed text-muted-foreground">
+                    <Sparkles className="mt-1 h-4 w-4 shrink-0 text-primary" />
                     <span>{p}</span>
                   </div>
                 </StaggerItem>
@@ -99,14 +99,14 @@ export function AboutSection({ about, certificatesCount = 0 }: AboutSectionProps
             <div className="mt-6 flex flex-wrap gap-2.5">
               {chips.map(({ icon: Icon, text, href }) => {
                 const cls =
-                  "inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-3.5 py-1.5 text-sm text-slate-200 backdrop-blur transition hover:border-cyan-300/50 hover:text-white";
+                  "inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-3.5 py-1.5 text-sm text-foreground backdrop-blur transition hover:border-cyan-300/50 hover:text-foreground";
                 return href ? (
                   <a key={text} href={href} className={cls}>
-                    <Icon className="h-4 w-4 text-cyan-300" /> {text}
+                    <Icon className="h-4 w-4 text-primary" /> {text}
                   </a>
                 ) : (
                   <span key={text} className={cls}>
-                    <Icon className="h-4 w-4 text-cyan-300" /> {text}
+                    <Icon className="h-4 w-4 text-primary" /> {text}
                   </span>
                 );
               })}
@@ -115,11 +115,11 @@ export function AboutSection({ about, certificatesCount = 0 }: AboutSectionProps
 
           {!!about.key_skills?.length && (
             <div className="mt-6">
-              <p className="mb-2.5 text-xs font-semibold uppercase tracking-widest text-slate-400">Key Skills</p>
+              <p className="mb-2.5 text-xs font-semibold uppercase tracking-widest text-muted-foreground">Key Skills</p>
               <StaggerContainer className="flex flex-wrap gap-2">
                 {about.key_skills.map((skill) => (
                   <StaggerItem key={skill}>
-                    <span className="inline-block rounded-lg border border-cyan-400/30 bg-cyan-400/10 px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-cyan-200">
+                    <span className="inline-block rounded-lg border border-cyan-400/30 bg-cyan-400/10 px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-primary">
                       {skill}
                     </span>
                   </StaggerItem>
@@ -137,7 +137,7 @@ export function AboutSection({ about, certificatesCount = 0 }: AboutSectionProps
                     suffix="+"
                     className="text-gradient font-display text-3xl font-bold sm:text-4xl"
                   />
-                  <p className="mt-1 text-xs leading-tight text-slate-400 sm:text-sm">{stat.label}</p>
+                  <p className="mt-1 text-xs leading-tight text-muted-foreground sm:text-sm">{stat.label}</p>
                 </div>
               </StaggerItem>
             ))}
@@ -164,18 +164,18 @@ export function AboutSection({ about, certificatesCount = 0 }: AboutSectionProps
                 className="object-contain object-top"
               />
             ) : (
-              <div className="flex h-full items-center justify-center text-6xl font-bold text-slate-500">
+              <div className="flex h-full items-center justify-center text-6xl font-bold text-muted-foreground">
                 {firstName.charAt(0)}
               </div>
             )}
           </TiltLayer>
 
           {/* floating glass badges */}
-          <div className="glass absolute -left-2 top-[18%] flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-semibold text-white sm:-left-6 sm:text-sm">
-            <Briefcase className="h-4 w-4 text-cyan-300" /> {years}+ yrs experience
+          <div className="glass absolute -left-2 top-[18%] flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-semibold text-foreground sm:-left-6 sm:text-sm">
+            <Briefcase className="h-4 w-4 text-primary" /> {years}+ yrs experience
           </div>
-          <div className="glass absolute -right-2 bottom-[22%] flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-semibold text-white sm:-right-6 sm:text-sm">
-            <Award className="h-4 w-4 text-cyan-300" /> {certificatesCount}+ certifications
+          <div className="glass absolute -right-2 bottom-[22%] flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-semibold text-foreground sm:-right-6 sm:text-sm">
+            <Award className="h-4 w-4 text-primary" /> {certificatesCount}+ certifications
           </div>
         </Reveal>
       </div>

@@ -1,3 +1,4 @@
+import { ThemeToggle } from "@/components/public/theme-toggle";
 import { SiteBackground } from "@/components/public/site-background";
 import { PersonJsonLd } from "@/components/public/person-jsonld";
 import { HireCta } from "@/components/public/hire-cta";
@@ -37,6 +38,7 @@ export default async function PublicLayout({ children }: { children: React.React
       <NowCard />
       <HireCta />
       <SiteBackground />
+      <ThemeToggle />
       <PersonJsonLd />
       <Footer fullName={fullName} socialLinks={socialLinks} />
       <ChatbotLoader />

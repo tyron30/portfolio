@@ -44,7 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${spaceGrotesk.variable} ${inter.variable}`}
     >
       <body className="font-sans antialiased">
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+        <ThemeProvider storageKey="portfolio-theme-v2" attribute="class" defaultTheme="dark" enableSystem={false}>
           <QueryProvider>
             {children}
             <Toaster richColors theme="dark" position="top-right" />

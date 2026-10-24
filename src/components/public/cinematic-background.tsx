@@ -33,6 +33,8 @@ export function CinematicBackground() {
     let parts: Particle[] = [];
     let nodes: TechNode[] = [];
     let maxDist = 110;
+    const root = document.documentElement;
+    let light = !root.classList.contains("dark");
 
     const rand = (a: number, b: number) => a + Math.random() * (b - a);
 
@@ -90,7 +92,9 @@ export function CinematicBackground() {
           const dy = ay - by;
           const d = Math.hypot(dx, dy);
           if (d < maxDist) {
-            ctx.strokeStyle = `rgba(56,189,248,${(1 - d / maxDist) * 0.2})`;
+            ctx.strokeStyle = light
+              ? `rgba(37,99,235,${(1 - d / maxDist) * 0.25})`
+              : `rgba(56,189,248,${(1 - d / maxDist) * 0.2})`;
             ctx.beginPath();
             ctx.moveTo(ax, ay);
             ctx.lineTo(bx, by);
@@ -103,7 +107,7 @@ export function CinematicBackground() {
       for (const p of parts) {
         const x = p.x + px * 40 * p.z;
         const y = p.y + py * 28 * p.z;
-        ctx.fillStyle = `rgba(103,232,249,${0.25 + p.z * 0.5})`;
+        ctx.fillStyle = light ? `rgba(37,99,235,${0.2 + p.z * 0.4})` : `rgba(103,232,249,${0.25 + p.z * 0.5})`;
         ctx.beginPath();
         ctx.arc(x, y, p.r * (0.6 + p.z * 0.7), 0, Math.PI * 2);
         ctx.fill();
@@ -123,10 +127,10 @@ export function CinematicBackground() {
         const x = n.x + px * 70 * n.z;
         const y = n.y + py * 48 * n.z + bob;
         ctx.save();
-        ctx.shadowColor = "rgba(34,211,238,0.9)";
-        ctx.shadowBlur = 16 * n.z;
-        ctx.strokeStyle = `rgba(103,232,249,${0.35 + n.z * 0.4})`;
-        ctx.fillStyle = "rgba(34,211,238,0.07)";
+        ctx.shadowColor = light ? "rgba(59,130,246,0.45)" : "rgba(34,211,238,0.9)";
+        ctx.shadowBlur = (light ? 8 : 16) * n.z;
+        ctx.strokeStyle = light ? `rgba(37,99,235,${0.3 + n.z * 0.35})` : `rgba(103,232,249,${0.35 + n.z * 0.4})`;
+        ctx.fillStyle = light ? "rgba(37,99,235,0.06)" : "rgba(34,211,238,0.07)";
         ctx.lineWidth = 1.4;
         hex(x, y, n.size * (0.7 + n.z * 0.5), n.rot);
         ctx.fill();
@@ -189,7 +193,15 @@ export function CinematicBackground() {
     }
     document.addEventListener("visibilitychange", onVisibility);
 
+    // follow the dark/light toggle
+    const mo = new MutationObserver(() => {
+      light = !root.classList.contains("dark");
+      draw(0);
+    });
+    mo.observe(root, { attributes: true, attributeFilter: ["class"] });
+
     return () => {
+      mo.disconnect();
       stop();
       ro.disconnect();
       io.disconnect();
@@ -199,8 +211,8 @@ export function CinematicBackground() {
   }, []);
 
   return (
-    <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden bg-slate-950">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_38%,#0c2d63_0%,#06112b_50%,#02040d_100%)]" />
+    <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden bg-background">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_38%,var(--fx-a)_0%,var(--fx-b)_50%,var(--fx-c)_100%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(148,163,184,0.8)_1px,transparent_0)] bg-[length:36px_36px] opacity-[0.07]" />
       <div className="absolute -left-1/4 top-0 h-[70%] w-1/2 rotate-12 bg-gradient-to-b from-cyan-400/15 via-transparent to-transparent blur-3xl" />
       <div className="absolute -right-1/4 top-0 h-[70%] w-1/2 -rotate-12 bg-gradient-to-b from-blue-500/20 via-transparent to-transparent blur-3xl" />
