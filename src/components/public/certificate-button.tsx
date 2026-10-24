@@ -13,7 +13,7 @@ export function CertificateButton({ url, label = "See Completion Certificate" }:
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="group inline-flex items-center gap-2 rounded-lg border border-primary/40 bg-primary/10 px-4 py-2 text-sm font-semibold text-primary transition hover:-translate-y-0.5 hover:bg-primary/20 hover:shadow-[0_0_18px_hsl(var(--primary)/0.3)]"
+        className="group inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-500/30 ring-1 ring-white/20 transition hover:-translate-y-0.5 hover:brightness-110 hover:shadow-blue-500/50 active:translate-y-0"
       >
         <Award className="h-4 w-4" />
         {label}

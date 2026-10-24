@@ -16,6 +16,7 @@ export type Education = z.infer<typeof educationSchema> & { id: string };
 // ---- Experience ----
 export const experienceSchema = z.object({
   company_name: z.string().min(1, "Company name is required"),
+  certificate_url: z.string().url().nullable().optional(),
   company_logo_url: z.string().url().nullable().optional(),
   position: z.string().min(1, "Position is required"),
   start_date: z.string().min(1, "Start date is required"),

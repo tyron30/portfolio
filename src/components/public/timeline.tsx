@@ -82,7 +82,8 @@ export function Timeline({ id, title, items, emptyLabel, icon: SectionIcon }: Ti
                     )}
                   </div>
 
-                  <div className="mt-3 flex items-start gap-3">
+                  <div className="mt-3 flex flex-wrap items-start justify-between gap-x-4 gap-y-3">
+                  <div className="flex items-start gap-3">
                     {item.logoUrl && (
                       <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white p-1 ring-1 ring-border [backdrop-filter:none] [isolation:isolate]">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -100,6 +101,8 @@ export function Timeline({ id, title, items, emptyLabel, icon: SectionIcon }: Ti
                       <p className="text-sm font-medium text-muted-foreground">{item.subtitle}</p>
                     </div>
                   </div>
+                  {item.certificateUrl && <CertificateButton url={item.certificateUrl} />}
+                  </div>
 
                   {item.description && <DescriptionBlock text={item.description} />}
 
@@ -116,11 +119,6 @@ export function Timeline({ id, title, items, emptyLabel, icon: SectionIcon }: Ti
                     </div>
                   )}
 
-                  {item.certificateUrl && (
-                    <div className={`flex ${item.tags?.length ? "mt-4" : "mt-4 border-t border-border pt-4"}`}>
-                      <CertificateButton url={item.certificateUrl} />
-                    </div>
-                  )}
                 </div>
               </Reveal>
             ))}
