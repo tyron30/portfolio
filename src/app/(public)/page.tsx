@@ -86,7 +86,27 @@ export default async function HomePage() {
       <Hero about={about} resumeUrl={resume?.file_url} socialLinks={socialLinks} />
       <TerminalIntro about={about} />
       <AboutSection about={about} certificatesCount={certificates.length} />
-      <ServicesSection />
+
+      <Timeline
+        id="experience"
+        title="Work Experience"
+        emptyLabel="Experience history coming soon."
+        icon={Briefcase}
+        items={experience.map((e) => ({
+          id: e.id,
+          title: e.position,
+          subtitle: e.company_name,
+          period: `${new Date(e.start_date).toLocaleDateString(undefined, {
+            year: "numeric",
+            month: "short",
+          })} - ${e.is_current ? "Present" : e.end_date ? new Date(e.end_date).toLocaleDateString(undefined, { year: "numeric", month: "short" }) : ""}`,
+          description: e.responsibilities,
+          logoUrl: e.company_logo_url,
+          certificateUrl: e.certificate_url,
+          tags: e.skills,
+          isCurrent: e.is_current,
+        }))}
+      />
 
       <Timeline
         id="education"
@@ -103,33 +123,17 @@ export default async function HomePage() {
         }))}
       />
 
-      <Timeline
-        id="experience"
-        title="Work Experience"
-        emptyLabel="Experience history coming soon."
-        icon={Briefcase}
-        items={experience.map((e) => ({
-          id: e.id,
-          title: e.position,
-          subtitle: e.company_name,
-          period: `${new Date(e.start_date).toLocaleDateString(undefined, {
-            year: "numeric",
-            month: "short",
-          })} - ${e.is_current ? "Present" : e.end_date ? new Date(e.end_date).toLocaleDateString(undefined, { year: "numeric", month: "short" }) : ""}`,
-          description: e.responsibilities,
-          logoUrl: e.company_logo_url, certificateUrl: e.certificate_url,
-          tags: e.skills,
-          isCurrent: e.is_current,
-        }))}
-      />
+      <CertificatesGrid certificates={certificates} />
+      <TechStackGrid items={techStack} />
+      <AiToolsSection />
 
       <NetworkDiagram />
       <ProjectsGrid projects={projects} techStack={techStack} />
       <CaseStudiesSection />
-      <CertificatesGrid certificates={certificates} />
-      <TechStackGrid items={techStack} />
-      <AiToolsSection />
+
       <GalleryMasonry items={gallery} />
+      <ServicesSection />
+
       <ResumeSection resume={resume} />
       <TestimonialsSection />
       <StackStrip />
@@ -137,4 +141,3 @@ export default async function HomePage() {
     </>
   );
 }
-

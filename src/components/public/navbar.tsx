@@ -8,11 +8,12 @@ import { Button } from "@/components/ui/button";
 
 const SECTIONS = [
   { id: "about", label: "About" },
-  { id: "education", label: "Education" },
   { id: "experience", label: "Experience" },
-  { id: "projects", label: "Projects" },
+  { id: "education", label: "Education" },
   { id: "certificates", label: "Certificates" },
+  { id: "projects", label: "Projects" },
   { id: "gallery", label: "Gallery" },
+  { id: "services", label: "Services" },
   { id: "contact", label: "Contact" },
 ];
 
@@ -58,7 +59,7 @@ export function Navbar({ fullName, resumeUrl }: NavbarProps) {
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
-        scrolled ? "glass shadow-lg shadow-black/20" : "bg-transparent"
+        scrolled || mobileOpen ? "glass shadow-lg shadow-black/20" : "bg-transparent"
       )}
     >
       <div className="container flex h-20 items-center justify-between">
@@ -66,13 +67,13 @@ export function Navbar({ fullName, resumeUrl }: NavbarProps) {
           {fullName || "Portfolio"}
         </Link>
 
-        <nav className="glass hidden items-center gap-1 rounded-full px-2 py-1.5 md:flex">
+        <nav className="glass hidden items-center gap-0.5 rounded-full px-2 py-1.5 lg:flex">
           {SECTIONS.map((s) => (
             <button
               key={s.id}
               onClick={() => handleNavClick(s.id)}
               className={cn(
-                "rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors",
+                "rounded-full px-3 py-1.5 text-sm font-medium transition-colors",
                 activeSection === s.id
                   ? "bg-primary text-primary-foreground"
                   : "text-foreground/70 hover:text-foreground"
@@ -83,7 +84,7 @@ export function Navbar({ fullName, resumeUrl }: NavbarProps) {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-2 md:flex">
+        <div className="hidden items-center gap-2 lg:flex">
           {resumeUrl && (
             <Button asChild variant="gradient" size="sm">
               <a href={resumeUrl} download>
@@ -94,27 +95,31 @@ export function Navbar({ fullName, resumeUrl }: NavbarProps) {
         </div>
 
         <button
-          className="text-foreground md:hidden"
+          className="text-foreground lg:hidden"
           onClick={() => setMobileOpen((o) => !o)}
           aria-label="Toggle menu"
+          aria-expanded={mobileOpen}
         >
           {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </div>
 
-      {/* Mobile drawer */}
+      {/* Mobile drawer: fits the screen height and scrolls if the phone is short */}
       <div
         className={cn(
-          "overflow-hidden border-t border-border bg-background/95 backdrop-blur transition-[max-height] duration-300 md:hidden",
-          mobileOpen ? "max-h-96" : "max-h-0"
+          "border-t border-border bg-background/95 backdrop-blur transition-[max-height] duration-300 lg:hidden",
+          mobileOpen ? "max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain" : "max-h-0 overflow-hidden"
         )}
       >
-        <nav className="flex flex-col gap-1 p-4">
+        <nav className="flex flex-col gap-1 p-4 pb-8">
           {SECTIONS.map((s) => (
             <button
               key={s.id}
               onClick={() => handleNavClick(s.id)}
-              className="rounded-lg px-3 py-3 text-left text-sm font-medium text-foreground/80 hover:bg-accent"
+              className={cn(
+                "rounded-lg px-3 py-3 text-left text-sm font-medium hover:bg-accent",
+                activeSection === s.id ? "bg-accent text-foreground" : "text-foreground/80"
+              )}
             >
               {s.label}
             </button>
@@ -123,9 +128,9 @@ export function Navbar({ fullName, resumeUrl }: NavbarProps) {
             <a
               href={resumeUrl}
               download
-              className="mt-2 rounded-lg bg-primary px-3 py-3 text-center text-sm font-medium text-primary-foreground"
+              className="mt-2 inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-500 px-3 py-3 text-center text-sm font-semibold text-white shadow-lg shadow-blue-500/30"
             >
-              Download Resume
+              <Download className="h-4 w-4" /> Download Resume
             </a>
           )}
         </nav>
